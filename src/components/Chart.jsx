@@ -327,9 +327,11 @@ export default function Chart({
         {spec.reveal && !revealed && (
           <g className="future">
             <rect x={x(visible.length) - slot / 2} width={(n - visible.length) * slot} y={pad.t} height={priceH + volH + 6} rx="4" />
-            <text x={x(visible.length) - slot / 2 + ((n - visible.length) * slot) / 2} y={pad.t + priceH / 2} textAnchor="middle">
-              What happens next?
-            </text>
+            {(n - visible.length) * slot > 130 && (
+              <text x={x(visible.length) - slot / 2 + ((n - visible.length) * slot) / 2} y={pad.t + priceH / 2} textAnchor="middle">
+                What happens next?
+              </text>
+            )}
           </g>
         )}
       </svg>

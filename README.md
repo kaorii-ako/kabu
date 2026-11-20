@@ -8,6 +8,7 @@ The method comes from Ariel Hernandez's public YouTube videos ([@RealSimpleAriel
 
 - 31 lessons in 10 units that follow his order: his playbook, chart basics (candles, volume, moving averages, ATR), reading the market, finding leaders, reading the chart, his setups (flat base, undercut and rally, MA undercut and rally, MA rejection), entry tactics (prior-day high, opening range, VWAP, 6/20), risk and position size, and managing the trade (sell rules, trimming into strength).
 - Trade replays: real setups from KGC, DELTA, AOT, KTB, KBANK, AMD, DELL and RKLB. You run Ariel's checklist, decide to take, size down or pass, then manage the trade one day at a time. Your result is compared with a rule engine that follows his guidance (stop at the entry day's low, trim a third to a half on a 3 to 5 day momentum burst, breakeven stop after the trim, extension trims from 7 ATR above the 50-day, and a simple close-below-the-20-day trailing exit).
+- A picture for every step: real candlestick charts for every example, and drawn diagrams for every concept (candle anatomy, ATR, flat base, undercut and rally, 6/20 cross, R multiples, momentum burst and more). All diagrams are at `#illustrations`.
 - Interactive SVG candlestick charts with moving averages, levels, tap-to-answer questions and bar-by-bar reveals.
 - Spaced review: finished questions come back after 1, 2, 4, 8, 16 and 32 days, mixed across lessons.
 - A position size calculator (US shares or Thai board lots) and a win rate and expectancy simulator.
@@ -28,6 +29,12 @@ npm run dev
 npm run build          # static site in dist/
 npm run build:single   # one self-contained index.html in dist-single/
 ```
+
+## GitHub Pages
+
+The site is live at https://kaorii-ako.github.io/kabu/. Every push to `main` runs `.github/workflows/pages.yml`, which builds the site and publishes `dist/` to the `gh-pages` branch. In the repository settings, Pages should be set to deploy from the `gh-pages` branch, root folder.
+
+To publish by hand instead: `npm run deploy:pages`.
 
 ## Deploy on Vercel
 

@@ -7,11 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "build:single": "vite build --config vite.single.config.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:pages": "vite build && touch dist/.nojekyll && npx gh-pages -d dist -t"
   },
   "dependencies": {
-    "@fontsource/hanken-grotesk": "^5.3.0",
-    "@fontsource/shippori-mincho-b1": "^5.3.0",
+    "@fontsource/figtree": "^5.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

@@ -535,7 +535,7 @@ export const UNITS = [
           },
           {
             type: "mcq",
-            q: "Over three months AOT rose 8.6% while the SET50 fund rose 1.2%. Over the same three months RKLB fell 34% while QQQ rose 3%. Which shows relative strength?",
+            q: "From late August to 24 Nov 2025 AOT rose 10% while the SET50 fund rose 1% (chart). From mid-May to 17 Aug 2026 RKLB fell 34% while QQQ rose 3%. Which shows relative strength?",
             options: ["AOT", "RKLB", "Neither"],
             answer: 0,
             explain: "AOT beat its market. RKLB badly lagged a rising market, which is relative weakness.",
@@ -1295,6 +1295,96 @@ export const UNITS = [
     ],
   },
 ];
+
+
+const VISUALS = {
+  "playbook:0": { illus: "playbook-flow" },
+  "playbook:1": { illus: "playbook-flow" },
+  "playbook:2": { illus: "win-loss" },
+  "playbook:3": { illus: "market-types" },
+  "playbook:4": { illus: "win-loss" },
+  "predict:0": { chart: { ex: "ktb_fail", from: "2026-07-15", to: "2026-10-30", lines: [{ price: 44.75, label: "Breakout level", tone: "pivot" }] } },
+  "predict:1": { illus: "group-together" },
+  "predict:2": { group: "gold_miners" },
+  "predict:3": { illus: "r-ruler" },
+  "candles:0": { illus: "candle-anatomy" },
+  "candles:2": { chart: { ex: "ktb_flat", from: "2026-01-12", to: "2026-02-09", mas: [], marks: [{ date: "2026-02-09", label: "9 Feb", at: "high", tone: "pivot" }] } },
+  "candles:4": { illus: "long-wick" },
+  "trend:0": { illus: "three-trends" },
+  "trend:2": { illus: "three-trends" },
+  "ma-basics:1": { chart: { ex: "kbank_unr", from: "2026-08-20", to: "2026-09-17", marks: [{ date: "2026-09-11", label: "5 closes", at: "low", tone: "pivot" }] } },
+  "ma-basics:2": { chart: { ex: "kgc_flat", from: "2025-04-15", to: "2025-08-29" } },
+  "ma-stack:1": { chart: { ex: "kgc_flat", from: "2025-04-15", to: "2025-08-04", marks: [{ date: "2025-08-04", label: "4 Aug", at: "high", tone: "pivot" }] } },
+  "atr:0": { illus: "atr-range" },
+  "atr:1": { illus: "atr-ladder" },
+  "atr:2": { chart: { ex: "delta_digest", from: "2025-04-01", to: "2025-07-16" } },
+  "atr:3": { chart: { ex: "dell_unr", from: "2026-07-01", to: "2026-10-30", reveal: { upto: "2026-09-02" }, lines: [{ price: 425, label: "1 Sept close", tone: "pivot" }] } },
+  "markets:0": { illus: "two-clocks" },
+  "markets:1": { illus: "board-lot" },
+  "markets:2": { illus: "board-lot" },
+  "markets:3": { illus: "two-clocks" },
+  "market-first:0": { illus: "checklist" },
+  "market-first:1": { illus: "market-types" },
+  "market-first:2": { illus: "progressive-exposure" },
+  "market-first:3": { illus: "market-types" },
+  "market-first:4": { illus: "progressive-exposure" },
+  "market-first:5": { illus: "win-loss" },
+  "groups:2": { illus: "group-together" },
+  "rs:0": { illus: "relative-strength" },
+  "rs:1": { group: "aot_rs" },
+  "rs:2": { illus: "relative-strength" },
+  "universe:0": { illus: "funnel" },
+  "universe:1": { group: "gold_miners" },
+  "universe:2": { illus: "funnel" },
+  "digest:2": { chart: { ex: "delta_digest", from: "2025-03-03", to: "2025-07-16" } },
+  "digest:3": { illus: "flat-base" },
+  "checklist:0": { illus: "checklist" },
+  "checklist:2": { chart: { ex: "kgc_flat", from: "2025-04-15", to: "2025-08-01" } },
+  "checklist:3": { chart: { ex: "kgc_flat", from: "2025-06-02", to: "2025-08-01", lines: [{ price: 16.52, label: "Pivot", tone: "pivot" }] } },
+  "flat-us:0": { illus: "flat-base" },
+  "flat-thai:3": { chart: { ex: "ktb_flat", from: "2026-01-12", to: "2026-02-09", lines: [{ price: 30.25, label: "Close", tone: "pivot" }, { price: 29.0, label: "Low", tone: "stop" }] } },
+  "unr:0": { illus: "unr" },
+  "unr:2": { chart: { ex: "dell_unr", from: "2026-07-15", to: "2026-09-01", lines: [{ price: 424, label: "24 Aug low", tone: "pivot" }, { price: 421.89, label: "Undercut low", tone: "stop" }] } },
+  "munr:0": { illus: "munr" },
+  "munr:2": { illus: "market-types" },
+  "rejection:0": { illus: "rejection" },
+  "setup-vs-entry:0": { illus: "zoom" },
+  "setup-vs-entry:1": { illus: "entry-tactics" },
+  "setup-vs-entry:2": { illus: "zoom" },
+  "setup-vs-entry:3": { illus: "entry-tactics" },
+  "six-twenty:0": { illus: "six-twenty" },
+  "six-twenty:1": { illus: "fourth-green-day" },
+  "six-twenty:2": { illus: "fourth-green-day" },
+  "six-twenty:3": { illus: "sizing" },
+  "stops:0": { illus: "r-ruler" },
+  "stops:2": { illus: "r-ruler" },
+  "stops:3": { chart: { ex: "amd_munr", from: "2026-08-01", to: "2026-10-09", lines: [{ price: 498.39, label: "Entry", tone: "pivot" }, { price: 480.33, label: "Stop", tone: "stop" }] } },
+  "sizing:0": { illus: "sizing" },
+  "sizing:1": { chart: { ex: "kgc_flat", from: "2025-06-02", to: "2025-08-04", lines: [{ price: 17.26, label: "Entry", tone: "pivot" }, { price: 16.35, label: "Stop", tone: "stop" }] } },
+  "sizing:2": { chart: { ex: "aot_flat", from: "2025-10-10", to: "2025-11-25", lines: [{ price: 43.75, label: "Entry", tone: "pivot" }, { price: 41.75, label: "Stop", tone: "stop" }] } },
+  "sizing:3": { illus: "sizing" },
+  "expectancy:0": { illus: "win-loss" },
+  "expectancy:1": { illus: "expectancy" },
+  "expectancy:2": { illus: "win-loss" },
+  "failed:2": { illus: "sell-rule" },
+  "failed:3": { illus: "sell-rule" },
+  "selling:0": { illus: "momentum-burst" },
+  "selling:1": { illus: "extension" },
+  "selling:3": { illus: "extension" },
+  "replay-kgc:0": { illus: "replay" },
+  "review-game:1": { chart: { ex: "delta_digest", from: "2025-05-01", to: "2025-07-17", lines: [{ price: 132.5, label: "Entry", tone: "pivot" }, { price: 115.5, label: "Stop", tone: "stop" }] } },
+};
+
+UNITS.forEach((u) =>
+  u.lessons.forEach((l) =>
+    l.steps.forEach((s, i) => {
+      const v = VISUALS[`${l.id}:${i}`];
+      if (v) Object.entries(v).forEach(([k, val]) => {
+        if (!s[k]) s[k] = val;
+      });
+    })
+  )
+);
 
 export const LESSONS = UNITS.flatMap((u) => u.lessons.map((l) => ({ ...l, unit: u })));
 

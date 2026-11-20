@@ -1,11 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@fontsource/shippori-mincho-b1/latin-700.css";
-import "@fontsource/shippori-mincho-b1/latin-800.css";
-import "@fontsource/hanken-grotesk/latin-400.css";
-import "@fontsource/hanken-grotesk/latin-500.css";
-import "@fontsource/hanken-grotesk/latin-600.css";
-import "@fontsource/hanken-grotesk/latin-700.css";
+import "@fontsource/figtree/latin-400.css";
+import "@fontsource/figtree/latin-500.css";
+import "@fontsource/figtree/latin-600.css";
+import "@fontsource/figtree/latin-700.css";
+import "@fontsource/figtree/latin-800.css";
 import "./styles.css";
 import App from "./App";
 

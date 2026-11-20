@@ -3,13 +3,15 @@ import Icon from "../components/Icon";
 import { LESSONS, UNITS, CHANNEL } from "../content/course";
 import { setOption } from "../lib/store";
 
-const heroSpec = {
+const cardSpec = {
   ex: "kgc_flat",
   from: "2025-05-15",
   to: "2025-08-29",
-  lines: [{ price: 16.52, label: "Flat base pivot", tone: "pivot" }],
-  marks: [{ date: "2025-08-04", label: "Prior-day-high entry", at: "low", tone: "pivot" }],
+  lines: [{ price: 16.52, label: "Pivot", tone: "pivot" }],
+  marks: [{ date: "2025-08-04", label: "Entry", at: "low", tone: "pivot" }],
 };
+
+const OFFSETS = [0, 56, 84, 56, 0, -56, -84, -56];
 
 function lessonState(lesson, i, state) {
   if (state.done[lesson.id]) return "done";
@@ -18,97 +20,90 @@ function lessonState(lesson, i, state) {
   return "locked";
 }
 
-function Candle({ status, rise }) {
-  return (
-    <svg className={`node-candle is-${status}`} viewBox="0 0 28 64" aria-hidden="true">
-      <line x1="14" y1={4 + (12 - rise)} x2="14" y2="60" />
-      <rect x="5" y={14 + (12 - rise)} width="18" height={34 + rise} rx="3" />
-    </svg>
-  );
-}
-
 export default function Home({ state, onStart, due }) {
   const nextIndex = LESSONS.findIndex((l) => !state.done[l.id]);
   const next = LESSONS[nextIndex];
   const doneCount = LESSONS.filter((l) => state.done[l.id]).length;
+  const pct = Math.round((doneCount / LESSONS.length) * 100);
   let flat = -1;
 
   return (
-    <>
-      <section className="hero">
-        <div className="hero-copy">
-          <h1>Read charts and trade like Ariel Hernandez.</h1>
-          <p className="lede">
-            His process, one step at a time: read the market, find the leading groups, spot the setup, enter with a tactic, size the risk, manage the trade. Built from{" "}
+    <div className="course-page">
+      <aside className="course-card">
+        <div className="course-art">
+          <Chart spec={cardSpec} height={190} />
+        </div>
+        <div className="course-body">
+          <h1>Trade like Ariel Hernandez</h1>
+          <p>
+            Learn his swing trading process one step at a time: read the market, find the leaders, spot the setup, time the entry, size the risk, manage the trade. Built from{" "}
             <a href={CHANNEL} target="_blank" rel="noreferrer">
               his public videos
             </a>{" "}
-            and practised on real US and Thai charts. No trading experience needed.
+            and practised on real US and Thai charts.
           </p>
-          <div className="hero-actions">
-            {next ? (
-              <button type="button" className="btn btn-primary" onClick={() => onStart(next.id)}>
-                {doneCount ? `Continue: ${next.title}` : "Start the first lesson"}
-              </button>
-            ) : (
-              <p className="all-done">You have finished every lesson. Keep your reviews going.</p>
-            )}
-            <a className="btn btn-quiet" href="#trade">
-              Replay a real trade
+          <div className="course-progress" aria-label={`${doneCount} of ${LESSONS.length} lessons done`}>
+            <span style={{ transform: `scaleX(${pct / 100})` }} />
+          </div>
+          <p className="course-count">
+            {doneCount} of {LESSONS.length} lessons, {UNITS.length} levels
+          </p>
+          {next ? (
+            <button type="button" className="btn btn-primary btn-block" onClick={() => onStart(next.id)}>
+              {doneCount ? "Continue" : "Start learning"}
+            </button>
+          ) : (
+            <p className="all-done">Every lesson is done. Keep your reviews going.</p>
+          )}
+          <div className="course-links">
+            <a className="btn btn-quiet btn-block" href="#trade">
+              <Icon name="play" size={16} /> Replay a real trade
             </a>
             {due > 0 && (
-              <a className="btn btn-quiet" href="#review">
-                {due} review {due === 1 ? "card" : "cards"} due
+              <a className="btn btn-quiet btn-block" href="#review">
+                <Icon name="cycle" size={16} /> {due} review {due === 1 ? "card" : "cards"} due
               </a>
             )}
           </div>
-          <p className="hero-fine">
-            {doneCount} of {LESSONS.length} lessons done. Not financial advice, and not affiliated with Ariel.
-          </p>
+          <p className="course-fine">Not financial advice. Not affiliated with Ariel Hernandez.</p>
         </div>
-        <div className="hero-chart">
-          <Chart spec={heroSpec} height={300} />
-        </div>
-      </section>
+      </aside>
 
-      <section className="course" aria-label="Course map">
-        {UNITS.map((unit) => (
-          <div className="unit" key={unit.id}>
-            <div className="unit-head">
+      <section className="levels" aria-label="Course map">
+        {UNITS.map((unit, u) => (
+          <div className={`level level-${u % 5}`} key={unit.id}>
+            <header className="level-head">
+              <span className="level-num">Level {u + 1}</span>
               <h2>{unit.title}</h2>
               <p>{unit.blurb}</p>
-            </div>
-            <ol className="unit-lessons">
+            </header>
+            <ol className="path">
               {unit.lessons.map((lesson, k) => {
                 flat += 1;
                 const i = flat;
                 const status = lessonState(lesson, i, state);
                 const current = next && next.id === lesson.id;
                 return (
-                  <li key={lesson.id} style={{ "--step": k }}>
+                  <li key={lesson.id} style={{ "--x": `${OFFSETS[k % OFFSETS.length]}px` }}>
+                    {current && <span className="path-start">Start</span>}
                     <button
                       type="button"
-                      className={`node is-${status}${current ? " is-current" : ""}`}
+                      className={`path-node is-${status}${current ? " is-current" : ""}`}
                       disabled={status === "locked"}
                       onClick={() => onStart(lesson.id)}
-                      aria-label={`${lesson.title}${status === "done" ? ", completed" : status === "locked" ? ", locked until the previous lesson is done" : ""}`}
+                      aria-label={`${lesson.title}${status === "done" ? ", completed" : status === "locked" ? ", locked" : ""}`}
                     >
-                      <Candle status={status} rise={Math.min(12, k * 4)} />
-                      <span className="node-title">{lesson.title}</span>
-                      <span className="node-meta">
-                        {status === "done" ? (
-                          <>
-                            <Icon name="check" size={14} /> Done
-                          </>
-                        ) : status === "locked" ? (
-                          <>
-                            <Icon name="lock" size={14} /> Locked
-                          </>
-                        ) : (
-                          `${lesson.steps.length} steps`
-                        )}
-                      </span>
+                      {status === "done" ? (
+                        <Icon name="check" size={26} />
+                      ) : status === "locked" ? (
+                        <Icon name="lock" size={22} />
+                      ) : lesson.steps.some((s) => s.type === "trade") ? (
+                        <Icon name="play" size={24} />
+                      ) : (
+                        <span className="path-n">{i + 1}</span>
+                      )}
                     </button>
+                    <span className={`path-label is-${status}`}>{lesson.title}</span>
                   </li>
                 );
               })}
@@ -124,6 +119,6 @@ export default function Home({ state, onStart, due }) {
           </p>
         )}
       </section>
-    </>
+    </div>
   );
 }

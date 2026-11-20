@@ -4,6 +4,7 @@ import Icon from "./Icon";
 import { group, fmtDate, fmtPrice, example } from "../lib/market";
 import { VIDEOS, videoUrl } from "../content/course";
 import TradeSim from "./TradeSim";
+import Illustration from "./Illustration";
 import { scenario } from "../content/trades";
 
 function grade(step, answer) {
@@ -39,6 +40,16 @@ export function VideoLink({ id }) {
   );
 }
 
+function Visuals({ step, revealed = true }) {
+  return (
+    <>
+      {step.illus && <Illustration name={step.illus} />}
+      {step.chart && <Chart spec={step.chart} revealed={revealed} />}
+      {step.group && <GroupChart series={group(step.group)} />}
+    </>
+  );
+}
+
 function Body({ paragraphs }) {
   return paragraphs.map((p, i) => <p key={i}>{p}</p>);
 }
@@ -68,8 +79,7 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
         <div className="prose">
           <Body paragraphs={step.body} />
         </div>
-        {step.chart && <Chart spec={step.chart} />}
-        {step.group && <GroupChart series={group(step.group)} />}
+        <Visuals step={step} />
         {(step.video || (lesson?.video && lesson.steps.find((s) => s.type === "read") === step)) && (
           <VideoLink id={step.video || lesson.video} />
         )}
@@ -91,8 +101,7 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
     return (
       <div className="step">
         {prompt}
-        {step.chart && <Chart spec={step.chart} revealed={checked} />}
-        {step.group && <GroupChart series={group(step.group)} />}
+        <Visuals step={step} revealed={checked} />
         <div className="options" role="radiogroup" aria-label="Answers">
           {step.options.map((opt, i) => {
             const state = checked ? (i === step.answer ? "is-right" : i === answer ? "is-wrong" : "is-muted") : answer === i ? "is-selected" : "";
@@ -127,6 +136,7 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
     return (
       <div className="step">
         {prompt}
+        {step.illus && <Illustration name={step.illus} />}
         <Chart
           spec={step.chart}
           tap={checked ? null : { mode: step.mode }}
@@ -151,6 +161,7 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
     return (
       <div className="step">
         {prompt}
+        <Visuals step={step} revealed={checked} />
         <form
           className="calc"
           onSubmit={(e) => {
@@ -278,14 +289,16 @@ export default function Player({ title, items, onExit, onFinish, onGrade, note }
           <Icon name="x" />
         </button>
         <div
-          className="meter"
+          className="segments"
           role="progressbar"
           aria-label={`${title} progress`}
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={Math.round(progress * 100)}
         >
-          <span style={{ transform: `scaleX(${progress})` }} />
+          {queue.map((q, k) => (
+            <span key={k} className={done || k < pos ? "is-done" : k === pos ? "is-now" : ""} />
+          ))}
         </div>
         <span className="player-count">
           {Math.min(pos + 1, queue.length)} of {queue.length}

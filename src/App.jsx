@@ -7,6 +7,7 @@ import Tools from "./views/Tools";
 import Sources from "./views/Sources";
 import { LESSONS, QUESTION_TYPES } from "./content/course";
 import Trade from "./views/Trade";
+import Illustration, { ILLUSTRATIONS } from "./components/Illustration";
 import { dueCards, finishLesson, gradeCard, setOption, streak, useStore } from "./lib/store";
 
 const PAGES = [
@@ -94,7 +95,7 @@ export default function App() {
     );
   }
 
-  const page = PAGES.some(([k]) => k === route) ? route : "learn";
+  const page = PAGES.some(([k]) => k === route) || route === "illustrations" ? route : "learn";
   const nextTheme = { auto: "dark", dark: "light", light: "auto" }[state.theme] || "auto";
 
   return (
@@ -155,6 +156,19 @@ export default function App() {
         )}
         {page === "trade" && <Trade state={state} />}
         {page === "tools" && <Tools />}
+        {page === "illustrations" && (
+          <section className="page page-wide">
+            <h1>Illustrations</h1>
+            <div className="gallery">
+              {ILLUSTRATIONS.map((n) => (
+                <div key={n}>
+                  <Illustration name={n} />
+                  <p className="box-label">{n}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
         {page === "about" && <Sources />}
       </main>
 
