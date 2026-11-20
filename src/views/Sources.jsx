@@ -80,6 +80,9 @@ export default function Sources() {
         <p>
           Charts use daily prices from Yahoo Finance, downloaded on {fmtDate(asOf)}. Moving averages are simple averages of closing prices. TDEX, a fund that tracks the SET50, stands in for the Thai market. Board lot and trading-hour rules come from the Stock Exchange of Thailand.
         </p>
+        <p>
+          The setup library and the chart analyzer use two years of daily bars for about 50 US and Thai stocks. A rule engine scans them for Ariel's setups (flat base, undercut and rally, MA undercut and rally, pullback to a rising average, gap up on heavy volume, high tight flag, and rallies into a falling 50-day), runs his checklist, and replays each trade with his management rules. The rules are a simplified version of his process written for teaching: they only see daily bars, so they can't weigh news, the stock's group or intraday entries the way he does. "Ask Claude" in the analyzer only appears when Kabu is opened inside Claude.
+        </p>
       </div>
 
       <h2>Not financial advice</h2>

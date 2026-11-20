@@ -117,6 +117,15 @@ export function checks(t) {
       explain: chaseOk ? "Yes: it hasn't used up its normal daily move yet." : "No: it has already moved more than a normal full day. Ariel never buys that; the stop would be too wide.",
     });
   }
+  if (f.stopAtr != null) {
+    const stopOk = f.stopAtr <= 1.5;
+    list.push({
+      key: "stop",
+      q: `Is the stop tight enough? The stop goes just under the entry day's low, ${cur}${f.entryDayLow}. That is ${f.stopAtr} ATR below the entry of ${cur}${f.entry}. Is it within 1.5 ATR?`,
+      yes: stopOk,
+      explain: stopOk ? "Yes: a stop within 1 to 1.5 ATR keeps the loss small if it fails." : "No: the stop is too far away. Ariel wants it within about 1 to 1.5 ATR, or he skips the trade.",
+    });
+  }
   return list;
 }
 

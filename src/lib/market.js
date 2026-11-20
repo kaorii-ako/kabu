@@ -9,8 +9,23 @@ export const TRADES = tradeData;
 
 export const MA_PERIODS = [10, 20, 50, 200];
 
+const resolvers = [];
+
+export function addExampleResolver(fn) {
+  resolvers.push(fn);
+}
+
 export function example(key) {
-  const ex = market.examples[key];
+  let ex = market.examples[key];
+  if (!ex) {
+    for (const r of resolvers) {
+      ex = r(key);
+      if (ex) {
+        market.examples[key] = ex;
+        break;
+      }
+    }
+  }
   if (!ex) throw new Error(`Unknown chart example: ${key}`);
   return ex;
 }

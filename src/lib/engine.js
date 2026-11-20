@@ -4,7 +4,7 @@ export const ACCOUNT = { USD: 100000, THB: 1000000 };
 export const MAX_POSITION = 0.15;
 
 export function tradeBars(t) {
-  return bars(`trade_${t.id}`);
+  return t.bars || bars(`trade_${t.id}`);
 }
 
 export function plan(t, smaller) {

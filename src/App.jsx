@@ -7,12 +7,14 @@ import Tools from "./views/Tools";
 import Sources from "./views/Sources";
 import { LESSONS, QUESTION_TYPES } from "./content/course";
 import Trade from "./views/Trade";
+import Analyze from "./views/Analyze";
 import Illustration, { ILLUSTRATIONS } from "./components/Illustration";
 import { dueCards, finishLesson, gradeCard, setOption, streak, useStore } from "./lib/store";
 
 const PAGES = [
   ["learn", "Learn", "path"],
   ["trade", "Trade", "play"],
+  ["analyze", "Analyze", "scan"],
   ["review", "Review", "cycle"],
   ["tools", "Tools", "tools"],
   ["about", "About", "book"],
@@ -95,7 +97,7 @@ export default function App() {
     );
   }
 
-  const page = PAGES.some(([k]) => k === route) || route === "illustrations" ? route : "learn";
+  const page = route === "library" ? "trade" : PAGES.some(([k]) => k === route) || route === "illustrations" ? route : "learn";
   const nextTheme = { auto: "dark", dark: "light", light: "auto" }[state.theme] || "auto";
 
   return (
@@ -154,7 +156,8 @@ export default function App() {
             }}
           />
         )}
-        {page === "trade" && <Trade state={state} />}
+        {page === "trade" && <Trade key={route} state={state} tab={route === "library" ? "library" : "trade"} onTab={(k) => go(k)} />}
+        {page === "analyze" && <Analyze />}
         {page === "tools" && <Tools />}
         {page === "illustrations" && (
           <section className="page page-wide">

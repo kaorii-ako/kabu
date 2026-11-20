@@ -97,6 +97,7 @@ export default function Chart({
   all.forEach((b, i) => {
     if (i === 0 || b.date.slice(0, 7) !== all[i - 1].date.slice(0, 7)) months.push({ i, label: monthLabel(b.date) });
   });
+  if (months.length > 1 && (months[1].i - months[0].i) * slot < 40) months.shift();
   const monthEvery = Math.ceil(months.length / Math.max(2, Math.floor(plotW / 64)));
 
   const levels = (spec.lines || [])

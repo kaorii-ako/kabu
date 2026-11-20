@@ -153,9 +153,16 @@ export default function TradeSim({ t, onComplete }) {
               {choice === "pass" ? "Replay it with the rules anyway" : "Place the trade"}
             </button>
           ) : (
-            <button type="button" className="btn btn-primary" onClick={() => { setPhase("outcome"); onComplete?.(); }}>
-              See what happened next
-            </button>
+            <div className="sim-actions">
+              <button type="button" className="btn btn-primary" onClick={() => { setPhase("outcome"); onComplete?.(); }}>
+                See what happened next
+              </button>
+              {canTrade && t.library && (
+                <button type="button" className="btn btn-quiet" onClick={begin}>
+                  Take it anyway and replay
+                </button>
+              )}
+            </div>
           )}
         </div>
       )}
@@ -165,6 +172,7 @@ export default function TradeSim({ t, onComplete }) {
           <p>
             That's the rest of the chart. A pass is a decision too: the rules keep you out of trades where the risk is unclear, even when some of them work out.
           </p>
+          {t.passNote && <p className="pass-note">{t.passNote}</p>}
         </div>
       )}
 
