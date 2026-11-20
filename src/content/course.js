@@ -14,6 +14,7 @@ export const VIDEOS = {
   sizing: { id: "YADyGj171Fw", title: "Mastering Position Sizing" },
   volume: { id: "jLIjTQj8l6I", title: "Mastering Stock Buy Points: Key Volume Insights" },
   bigLosses: { id: "3LXVRMDFtOg", title: "Trading Rule: Avoid HUGE Losses" },
+  sevenSteps: { id: "-dv_2h61a2o", title: "The 7 Steps to a Profitable Trading System (TraderLion interview)" },
 };
 
 export const videoUrl = (v) => `https://www.youtube.com/watch?v=${v.id}`;
@@ -22,9 +23,107 @@ const kgcBase = { ex: "kgc_flat", from: "2025-06-02", to: "2025-08-29" };
 
 export const UNITS = [
   {
-    id: "chart",
-    title: "Reading a chart",
-    blurb: "Candles, volume, trend, and how Thai and US markets differ.",
+    id: "playbook",
+    title: "Ariel's playbook",
+    blurb: "How he thinks before he looks at a single chart.",
+    lessons: [
+      {
+        id: "playbook",
+        title: "Ariel's process in one lesson",
+        video: "sevenSteps",
+        steps: [
+          {
+            type: "read",
+            title: "Who you're learning from",
+            body: [
+              "Ariel Hernandez is a professional swing trader. He trades US stocks, usually holding for days to weeks, runs a trading room, and explains his trades on his YouTube channel and in interviews.",
+              "His method isn't one magic signal. It's a set of pieces that fit together, and this course takes them in his order.",
+            ],
+          },
+          {
+            type: "read",
+            title: "The pieces, in order",
+            body: [
+              "1. Read the market. Is it healthy, choppy or falling? That decides how much he trades and which setups he looks for.",
+              "2. Find the leading groups, then the strongest stocks inside them.",
+              "3. Read the daily chart for a clean setup: a flat base, an undercut and rally, a pullback into a rising average.",
+              "4. Pick an entry tactic on a short chart, so the stop can be tight.",
+              "5. Size the position from the stop, so a loss is small and known before he buys.",
+              "6. Manage the trade: trim into strength, let the rest work, follow the sell rules.",
+              "7. Add exposure step by step when trades start working, and pull back when they don't.",
+            ],
+          },
+          {
+            type: "read",
+            title: "He's wrong most of the time",
+            body: [
+              "In his TraderLion interview Ariel says his own stats show him right on about 35 to 37% of trades. He still makes money because losers are cut fast and winners are left to work.",
+              "So this course won't teach you to predict. It teaches you to find trades where being wrong is cheap and being right can pay a lot.",
+            ],
+          },
+          {
+            type: "mcq",
+            q: "What does Ariel look at first, before any single chart?",
+            options: ["How the market is acting", "Which stock has the cheapest price", "Yesterday's news headlines"],
+            answer: 0,
+            explain: "The market sets the environment. The same chart can be a buy in a healthy market and a trap in a weak one.",
+          },
+          {
+            type: "mcq",
+            q: "Ariel is right on roughly 35 to 37% of his trades. How can that make money?",
+            options: [
+              "His losses are small and quick; his winners are much bigger",
+              "He only trades on days he feels confident",
+              "It can't: you need to be right more than half the time",
+            ],
+            answer: 0,
+            explain: "Cut losers small, let winners run. The size of wins versus losses matters more than how often you win.",
+          },
+        ],
+      },
+      {
+        id: "predict",
+        title: "Setups don't predict. Context helps.",
+        video: "predictive",
+        steps: [
+          {
+            type: "read",
+            title: "What a setup is for",
+            body: [
+              "In his video on predictive ability, Ariel says a chart pattern on its own doesn't tell you a stock will go up. A perfect-looking breakout can fail.",
+              "What a setup does give you is a clear level where you are wrong. That lets you keep the loss small when it fails.",
+            ],
+          },
+          {
+            type: "read",
+            title: "Stacking the deck",
+            body: [
+              "What makes a setup more likely to work is context. Is the market healthy? Is the stock's group one of the leaders? Are other stocks in the group setting up and breaking out at the same time?",
+              "If several banks or several chip stocks all break out together while the market is strong, that's where money is going. If the group is rolling over, the same pattern is more likely to fail.",
+            ],
+          },
+          {
+            type: "mcq",
+            q: "Three gold miners have flat bases. Two broke out yesterday, gold is rising and the market is healthy. The third is breaking out today. Compared with a lone breakout in a weak group, this one is:",
+            options: ["More likely to work, because its group and market agree", "Guaranteed to work", "Less likely to work, because it's late"],
+            answer: 0,
+            explain: "Never guaranteed, but the context is on your side. That's the closest thing to an edge a setup gets.",
+          },
+          {
+            type: "mcq",
+            q: "What is the main job of a setup, in Ariel's view?",
+            options: ["To give you a defined level where you know you're wrong", "To predict the next move", "To find the cheapest stock"],
+            answer: 0,
+            explain: "Defined risk is the point. The context decides how likely it is to work.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "basics",
+    title: "Chart basics, his way",
+    blurb: "Candles, volume, moving averages and ATR: the tools he actually uses.",
     lessons: [
       {
         id: "candles",
@@ -99,7 +198,7 @@ export const UNITS = [
             title: "Volume counts the shares traded",
             body: [
               "The bars along the bottom of every chart show volume: how many shares changed hands that day. Funds and banks buy millions of shares at a time, and you can see them in these bars.",
-              "Ariel teaches volume as a check on buy points. A breakout on heavy volume suggests big buyers are behind it. A breakout on light volume has less support.",
+              "Asked whether he checks volume when a stock moves through a buy point, Ariel says the first question is how its own market is acting. For a gold miner he looks at gold, the gold miners ETF and other gold stocks. Volume is a useful extra: a heavy day means you are not the only one buying.",
             ],
             chart: { ex: "ktb_flat", from: "2026-01-12", to: "2026-02-12", mas: [] },
           },
@@ -155,53 +254,6 @@ export const UNITS = [
           },
         ],
       },
-      {
-        id: "markets",
-        title: "Thai stocks and US stocks",
-        steps: [
-          {
-            type: "read",
-            title: "Two markets, two clocks",
-            body: [
-              "Thai stocks trade on the Stock Exchange of Thailand (SET), priced in baht. There is a morning session from 10:00 to 12:30 and an afternoon session from 14:00 to 16:30, Bangkok time.",
-              "US stocks trade on the NYSE and Nasdaq from 9:30 to 16:00 New York time. From Bangkok that is 21:30 to 04:00 in the northern winter and 20:30 to 03:00 in summer.",
-            ],
-          },
-          {
-            type: "read",
-            title: "Board lots and price steps",
-            body: [
-              "On the SET main board you buy in board lots of 100 shares, or 50 for stocks priced at ฿500 or more for six months straight. Smaller orders go to a separate odd-lot board with fewer buyers and sellers.",
-              "Thai prices also move in fixed steps that depend on the price. KTB near ฿30 moves in ฿0.25 steps. KBANK near ฿230 moves in ฿1 steps. US stocks move in cents, and many US brokers sell fractions of a share.",
-            ],
-          },
-          {
-            type: "mcq",
-            q: "You can afford 70 shares of AOT. Where can that order trade?",
-            options: [
-              "Only on the odd-lot board, because the main board trades in lots of 100",
-              "On the main board like any other order",
-              "Nowhere: the minimum is 1,000 shares",
-            ],
-            answer: 0,
-            explain: "70 is less than one board lot, so it goes to the odd-lot board.",
-          },
-          {
-            type: "mcq",
-            q: "It is 22:00 in Bangkok on a weekday in January. Is the US market open?",
-            options: ["Yes, it opened at 21:30 Bangkok time", "No, it opens at 9:30 Bangkok time", "No, US markets close for January"],
-            answer: 0,
-            explain: "In January New York is 12 hours behind Bangkok, so 9:30 there is 21:30 here.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "ma",
-    title: "Moving averages",
-    blurb: "The lines that show the trend without the noise.",
-    lessons: [
       {
         id: "ma-basics",
         title: "What a moving average is",
@@ -275,38 +327,164 @@ export const UNITS = [
           },
         ],
       },
-    ],
-  },
-  {
-    id: "context",
-    title: "Market and groups",
-    blurb: "Trade with the tide: check the market, then find the leading groups.",
-    lessons: [
       {
-        id: "market-first",
-        title: "Check the market first",
+        id: "atr",
+        title: "ATR: how far a stock normally moves",
+        video: "sevenSteps",
         steps: [
           {
             type: "read",
-            title: "Most stocks follow the market",
+            title: "Average true range",
             body: [
-              "When the market falls, good-looking setups fail more often. So Ariel starts with the market's trend, and trades more when it is healthy and less when it isn't. He builds exposure step by step as trades start to work.",
-              "For US stocks traders watch the S&P 500 and the Nasdaq 100, which the fund QQQ tracks. For Thai stocks there is the SET index and the SET50. In this course TDEX, a fund that tracks the SET50, stands in for the Thai market.",
+              "ATR is a stock's average daily range, usually over the last 14 days. A stock with a $5 ATR moves about $5 on a normal day; a $1 ATR stock moves a fifth as much. Dividing ATR by the price gives the average daily range as a percentage.",
+              "Ariel uses ATR to stop himself from chasing and to set stops that fit the stock's personality.",
+            ],
+          },
+          {
+            type: "read",
+            title: "Ariel's ATR rules",
+            body: [
+              "He never buys a stock that has already moved its full average daily range that day. You'd be asking the market for favours, and your stop would be far away.",
+              "A stop should be no more than about 1 to 1.5 times the ATR, and he thinks even that is a lot.",
+              "He doesn't open a new position when price is more than about 4 ATR above the 50-day average. From around 7 ATR above it, he starts trimming.",
+            ],
+          },
+          {
+            type: "calc",
+            q: "On 16 July 2025 DELTA closed at ฿114.50. Its 50-day average was ฿104.10 and its ATR was ฿4.82. How many ATR above the 50-day was it? Round to one decimal.",
+            answer: 2.2,
+            tolerance: 0.1,
+            unit: "ATR",
+            explain: "(114.50 − 104.10) ÷ 4.82 = 2.2 ATR. Under 4, so not too extended for a new position.",
+          },
+          {
+            type: "mcq",
+            q: "DELL closed at $425 on 1 Sept 2026. The next morning it opened at $462, up 8.7%. Its average daily range was 5.7%. What do Ariel's rules say about buying at the open?",
+            options: [
+              "Don't: it has already moved more than its full daily range",
+              "Buy: a big gap means strength",
+              "Buy double, because it's moving",
+            ],
+            answer: 0,
+            explain: "It went on to rise another 28%, which happens. The rule still holds: over many trades, chasing full-range moves means wide stops and poor risk.",
+          },
+        ],
+      },
+      {
+        id: "markets",
+        title: "Thai stocks and US stocks",
+        steps: [
+          {
+            type: "read",
+            title: "Two markets, two clocks",
+            body: [
+              "Thai stocks trade on the Stock Exchange of Thailand (SET), priced in baht. There is a morning session from 10:00 to 12:30 and an afternoon session from 14:00 to 16:30, Bangkok time.",
+              "US stocks trade on the NYSE and Nasdaq from 9:30 to 16:00 New York time. From Bangkok that is 21:30 to 04:00 in the northern winter and 20:30 to 03:00 in summer.",
+            ],
+          },
+          {
+            type: "read",
+            title: "Board lots and price steps",
+            body: [
+              "On the SET main board you buy in board lots of 100 shares, or 50 for stocks priced at ฿500 or more for six months straight. Smaller orders go to a separate odd-lot board with fewer buyers and sellers.",
+              "Thai prices also move in fixed steps that depend on the price. KTB near ฿30 moves in ฿0.25 steps. KBANK near ฿230 moves in ฿1 steps. US stocks move in cents, and many US brokers sell fractions of a share.",
             ],
           },
           {
             type: "mcq",
-            q: "The index is under its falling 50-day average, and most breakouts this month have failed. What does a rules-based trader do?",
+            q: "You can afford 70 shares of AOT. Where can that order trade?",
             options: [
-              "Trade smaller, or sit out until the market improves",
+              "Only on the odd-lot board, because the main board trades in lots of 100",
+              "On the main board like any other order",
+              "Nowhere: the minimum is 1,000 shares",
+            ],
+            answer: 0,
+            explain: "70 is less than one board lot, so it goes to the odd-lot board.",
+          },
+          {
+            type: "mcq",
+            q: "It is 22:00 in Bangkok on a weekday in January. Is the US market open?",
+            options: ["Yes, it opened at 21:30 Bangkok time", "No, it opens at 9:30 Bangkok time", "No, US markets close for January"],
+            answer: 0,
+            explain: "In January New York is 12 hours behind Bangkok, so 9:30 there is 21:30 here.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "market",
+    title: "Step 1: Read the market",
+    blurb: "Healthy, choppy or falling decides how much and what to trade.",
+    lessons: [
+      {
+        id: "market-first",
+        title: "Read the market like Ariel",
+        video: "maReject",
+        steps: [
+          {
+            type: "read",
+            title: "His morning checklist",
+            body: [
+              "Before the open Ariel runs through the same questions. What are the indexes doing? How is breadth: are most stocks rising or falling? Are the leaders still leading? Is there market news today, like a Fed meeting? And how are his own open positions acting?",
+              "For US stocks that means the S&P 500 and the Nasdaq 100 (the fund QQQ). For Thai stocks, use the SET index and the SET50. In this course TDEX, a fund that tracks the SET50, stands in for the Thai market.",
+            ],
+          },
+          {
+            type: "read",
+            title: "Three kinds of market",
+            body: [
+              "Healthy and trending: breakouts work, so he trades flat bases and other breakouts and builds up to full size.",
+              "Choppy or drifting down: he trades less and smaller. He prefers pullbacks into rising moving averages, undercut and rallies and support gaps over breakouts.",
+              "Bear market: he waits. Longs only make sense again after a selling climax or a follow-through day, a strong up day in an index some days after a low.",
+            ],
+          },
+          {
+            type: "read",
+            title: "Progressive exposure",
+            body: [
+              "Most follow-through days fail, so Ariel doesn't jump in with everything. He starts small, and adds only when his first trades work. If new positions keep getting stopped out, that's the market telling him to slow down.",
+              "Red flags he watches: breakouts failing, defensive stocks such as consumer staples leading, and his own stops getting hit.",
+            ],
+          },
+          {
+            type: "mcq",
+            q: "The index is under its falling 50-day average, and most breakouts this month have failed. What would Ariel do?",
+            options: [
+              "Trade smaller, and look for pullbacks into rising averages rather than breakouts",
               "Trade bigger to win back the losses",
               "Ignore the market, because only the stock matters",
             ],
             answer: 0,
-            explain: "Failing breakouts are information about the market. Cutting size keeps you in the game until conditions improve.",
+            explain: "Failing breakouts are information. In that environment he leans on pullback setups and keeps size down.",
+          },
+          {
+            type: "mcq",
+            q: "After a correction, the index has a strong follow-through day. What does progressive exposure mean here?",
+            options: [
+              "Start with a few small positions and add only as they work",
+              "Go fully invested immediately",
+              "Wait a full year to be sure",
+            ],
+            answer: 0,
+            explain: "Most follow-through days fail. Small first, then more as the market proves it.",
+          },
+          {
+            type: "mcq",
+            q: "You've been stopped out of four new long trades in a row this week. What is that telling you?",
+            options: ["The market isn't rewarding longs right now; slow down", "You need to take a fifth trade quickly", "Your broker is broken"],
+            answer: 0,
+            explain: "Ariel treats his own results as market feedback. Repeated stop-outs mean pump the brakes.",
           },
         ],
       },
+    ],
+  },
+  {
+    id: "groups",
+    title: "Step 2: Find the leaders",
+    blurb: "Leading groups first, then the strongest stocks inside them.",
+    lessons: [
       {
         id: "groups",
         title: "Strong stocks move in groups",
@@ -339,6 +517,35 @@ export const UNITS = [
             options: ["The gold miner, because its group is leading", "The other one, because it is cheaper", "Either: groups don't matter"],
             answer: 0,
             explain: "Same setup, different tide. The stock with its group behind it has more buyers on its side.",
+          },
+        ],
+      },
+      {
+        id: "rs",
+        title: "Relative strength: finding leaders",
+        video: "sevenSteps",
+        steps: [
+          {
+            type: "read",
+            title: "Strong when the market is weak",
+            body: [
+              "Ariel's simplest test for a leader: how does it act when the market doesn't help? A stock rising while the market goes sideways or down has relative strength. So does one going sideways while the market falls, or one that is still within 10 to 20% of its high during a sell-off.",
+              "He tags every stock on his watchlist with its industry group and tracks which groups lead over the last week, month and three months.",
+            ],
+          },
+          {
+            type: "mcq",
+            q: "Over three months AOT rose 8.6% while the SET50 fund rose 1.2%. Over the same three months RKLB fell 34% while QQQ rose 3%. Which shows relative strength?",
+            options: ["AOT", "RKLB", "Neither"],
+            answer: 0,
+            explain: "AOT beat its market. RKLB badly lagged a rising market, which is relative weakness.",
+          },
+          {
+            type: "mcq",
+            q: "The market falls 8% in a month. Stock A falls 2% and stays near its highs. Stock B falls 15%. When the market recovers, which is Ariel more likely to watch?",
+            options: ["Stock A, because it held up while the market fell", "Stock B, because it is cheaper now", "Whichever has the lower share price"],
+            answer: 0,
+            explain: "Stocks that hold up in a correction are often the first to break out when it ends. Ariel says he welcomes corrections for this reason.",
           },
         ],
       },
@@ -382,9 +589,9 @@ export const UNITS = [
     ],
   },
   {
-    id: "digest",
-    title: "The digest",
-    blurb: "Why strong stocks pause, and why the pause matters.",
+    id: "read",
+    title: "Step 3: Read the chart",
+    blurb: "Up, sideways, up, and the checklist he runs on every chart.",
     lessons: [
       {
         id: "digest",
@@ -428,12 +635,55 @@ export const UNITS = [
           },
         ],
       },
+      {
+        id: "checklist",
+        title: "Run the checklist on a chart",
+        video: "flatBase",
+        steps: [
+          {
+            type: "read",
+            title: "Five questions before every trade",
+            body: [
+              "Put the pieces together and you get a checklist you can run on any chart in a minute:",
+              "Is the market healthy? Is the stock stronger than the market? Is it in an uptrend, above its 50-day or just under it after an undercut? Is it within about 4 ATR of the 50-day? Would buying now mean chasing a stock that has already moved its full daily range?",
+              "Then: what is the setup, and where exactly are you wrong?",
+            ],
+          },
+          {
+            type: "mcq",
+            q: "Kinross Gold, 1 Aug 2025. QQQ was above a rising 50-day. KGC was up 41% over six months against 6% for QQQ. Is the market healthy, and is KGC a leader?",
+            chart: { ex: "kgc_flat", from: "2025-04-15", to: "2025-08-01" },
+            options: ["Yes and yes", "Market yes, KGC no", "Market no, KGC yes"],
+            answer: 0,
+            explain: "Both boxes ticked. Gold miners were also the strongest group that year.",
+          },
+          {
+            type: "calc",
+            q: "KGC closed at $16.21 on 1 Aug. Its 50-day average was $15.45 and its ATR was $0.55. How many ATR above the 50-day? Round to one decimal.",
+            answer: 1.4,
+            tolerance: 0.1,
+            unit: "ATR",
+            explain: "(16.21 − 15.45) ÷ 0.55 = 1.4 ATR. Comfortably under 4: not extended.",
+          },
+          {
+            type: "mcq",
+            q: "So far: healthy market, a leader, an uptrend, not extended, and a flat base with highs near $16.50. What's left to decide?",
+            options: [
+              "The entry trigger and the stop: where you get in and where you're wrong",
+              "Nothing: just buy at any price",
+              "Whether the company has a nice logo",
+            ],
+            answer: 0,
+            explain: "Ariel bought this kind of base on a break of the prior day's high. The next lessons cover his setups and entry tactics.",
+          },
+        ],
+      },
     ],
   },
   {
     id: "setups",
-    title: "Daily setups",
-    blurb: "Flat bases, undercuts and rejections, on real US and Thai charts.",
+    title: "Step 4: His setups",
+    blurb: "Flat bases, undercuts and rallies, and the rejections he avoids.",
     lessons: [
       {
         id: "flat-us",
@@ -445,7 +695,7 @@ export const UNITS = [
             title: "The flat base",
             body: [
               "A flat base is a tight sideways range, often a few weeks long, where the highs line up near one price. That price is the pivot. A move above the pivot, ideally on rising volume, says the digest is over.",
-              "Ariel names the flat base as his favourite setup. Here is Kinross Gold (KGC) in the summer of 2025, while gold miners led the market.",
+              "Ariel adds two things. Almost every great flat base sits above all the key moving averages, and it is rarely the only stock in its group doing it. This is Kinross Gold (KGC) in summer 2025, a chart he uses in his own flat base video, while gold and silver miners led the market.",
             ],
             chart: { ...kgcBase, to: "2025-08-01" },
           },
@@ -471,7 +721,7 @@ export const UNITS = [
               "Buy with no stop, because it's a strong stock",
             ],
             answer: 0,
-            explain: "The setup gives both the entry and the exit. Over the next three weeks KGC reached $19.82, about 15% above the breakout close, while the stop sat about 5% below.",
+            explain: "Ariel says his entry here would simply be a break of the prior day's high, which happened on 4 Aug. Over the next three weeks KGC reached $19.82, about 15% above the breakout close.",
           },
         ],
       },
@@ -531,84 +781,86 @@ export const UNITS = [
         steps: [
           {
             type: "read",
-            title: "The shakeout",
+            title: "A shakeout below a meaningful low",
             body: [
-              "Sometimes a stock dips below an obvious low, sets off the stop orders sitting just under it, then climbs back above. Ariel calls this an undercut and rally.",
-              "The sellers who were shaken out are gone, and the reclaim gives a tight place to be wrong: the low of the undercut. Here is Kasikornbank (KBANK) in October 2026.",
+              "Ariel's undercut and rally: a stock dips below a meaningful prior low, one where price clearly held before and bounced, then climbs back above it. Sellers who were shaken out are gone, and the new low gives a tight place to be wrong.",
+              "He reads the setup on the daily chart and times the entry on a 5-minute chart, for example a break of the opening range or a reclaim of VWAP. He doesn't trade undercuts of some random recent low.",
+              "Dell (DELL), September 2026: the 24 Aug low of $424 had held and bounced. On 1 Sept DELL dipped under it.",
             ],
             chart: {
-              ex: "kbank_unr",
-              from: "2026-09-01",
-              to: "2026-11-20",
-              lines: [{ price: 230, label: "Prior low", tone: "pivot" }],
-              marks: [{ date: "2026-10-09", label: "Undercut", at: "low", tone: "stop" }],
+              ex: "dell_unr",
+              from: "2026-06-15",
+              to: "2026-09-01",
+              lines: [{ price: 424, label: "24 Aug low", tone: "pivot" }],
             },
           },
           {
             type: "tap",
-            q: "Tap the undercut: the day KBANK broke below its ฿230 low of 8 October.",
-            chart: { ex: "kbank_unr", from: "2026-09-01", to: "2026-10-20", lines: [{ price: 230, label: "Prior low", tone: "pivot" }] },
+            q: "Tap the undercut: the day DELL traded below its $424 low.",
+            chart: { ex: "dell_unr", from: "2026-06-15", to: "2026-09-08", lines: [{ price: 424, label: "24 Aug low", tone: "pivot" }] },
             mode: "candle",
-            target: { from: "2026-10-09", to: "2026-10-09" },
-            explain: "9 Oct 2026. KBANK fell to ฿226, then closed back above ฿230 on the next trading day. By 28 Oct it reached ฿252.",
+            target: { from: "2026-09-01", to: "2026-09-01" },
+            explain: "1 Sept 2026. DELL touched $421.89, closed back at $425.00, and the next day opened at $462.",
           },
           {
             type: "mcq",
-            q: "Dell (DELL) undercut its 24 Aug low of $424.00 on 1 Sept 2026, touching $421.89, and closed at $425.00. If you buy the reclaim, where does the stop go?",
-            chart: {
-              ex: "dell_unr",
-              from: "2026-06-15",
-              to: "2026-09-30",
-              reveal: { upto: "2026-09-01" },
-              lines: [{ price: 424, label: "24 Aug low", tone: "pivot" }],
-            },
+            q: "If you buy the reclaim of $424, where does the stop go?",
             options: ["Just under $421.89, the undercut low", "At $300, far away to be safe", "No stop: undercuts always work"],
             answer: 0,
-            explain: "If price goes back under the undercut low, the idea is wrong. The next day DELL opened at $462 and closed at $492.20. By 18 Sept it hit $595.51.",
+            explain: "If price goes back under the new low, the idea is wrong. That level is what makes this a defined-risk trade.",
           },
           {
             type: "mcq",
-            q: "What makes an undercut and rally valid?",
+            q: "KBANK, October 2026. It had slid from ฿258. On 8 Oct it made a low of ฿230, and on 9 Oct it dipped to ฿226 and closed at ฿228. Is this Ariel's undercut and rally?",
+            chart: { ex: "kbank_unr", from: "2026-08-01", to: "2026-10-09", lines: [{ price: 230, label: "8 Oct low", tone: "pivot" }] },
             options: [
-              "Price reclaims the old low quickly, within a day or two",
-              "Price stays under the low for weeks",
-              "The company pays a dividend",
+              "No: the ฿230 low was a day old, not a meaningful low that had held before",
+              "Yes: any undercut of any low counts",
+              "Yes, because it's a bank",
             ],
             answer: 0,
-            explain: "The speed of the reclaim is the point. Weeks below the low is a breakdown, not a shakeout.",
+            explain: "A meaningful low is one the market already defended. KBANK was also under all its key averages. It bounced 9% anyway, but that doesn't make it his setup.",
           },
         ],
       },
       {
         id: "munr",
-        title: "Moving-average undercut and rally",
+        title: "Moving-average undercut and rally: Ariel's AMD trade",
         video: "unr",
         steps: [
           {
             type: "read",
-            title: "Same idea, different line",
+            title: "Same idea, with a moving average",
             body: [
-              "The undercut works with moving averages too. A strong stock dips under its 20-day or 50-day average during the day and closes back above it. Ariel calls this an MA undercut and rally.",
-              "AMD in September 2026: the 20-day had flattened out and the 50-day was still drifting lower, which made the trade less clean than the textbook version.",
+              "Ariel learned the MA undercut and rally from Gil Morales. A strong stock pulls back, dips under a key moving average like the 10, 20 or 50-day, then rallies back through it.",
+              "He bought AMD this way himself on Monday 14 Sept 2026, as he explains in his undercut and rally video. AMD gapped down into its 10 and 20-day averages, sold off in the morning, then reclaimed VWAP right at those averages. His risk to the low was about 1.25%.",
             ],
-            chart: { ex: "amd_munr", from: "2026-07-01", to: "2026-09-14", marks: [{ date: "2026-09-14", label: "Undercut 20-day", at: "low", tone: "stop" }] },
+            chart: { ex: "amd_munr", from: "2026-07-01", to: "2026-09-14", marks: [{ date: "2026-09-14", label: "Undercut, then reclaim", at: "low", tone: "pivot" }] },
           },
           {
             type: "mcq",
-            q: "On 14 Sept AMD fell to $480.33, under its 20-day average of $480.99, and closed at $493.41. You plan to buy if it trades above today's high of $498.39 tomorrow. Where's the stop?",
+            q: "On 14 Sept AMD fell to $480.33, under its 20-day average of $480.99, and closed at $493.41. Where is the stop for this trade?",
             chart: {
               ex: "amd_munr",
               from: "2026-07-01",
               to: "2026-10-09",
               reveal: { upto: "2026-09-14" },
-              lines: [
-                { price: 498.39, label: "Entry trigger", tone: "pivot", after: true },
-                { price: 480.33, label: "Stop", tone: "stop", after: true },
-              ],
+              lines: [{ price: 480.33, label: "Undercut low", tone: "stop", after: true }],
             },
-            options: ["$480.33, the low of the undercut day", "$400, a round number", "At the 200-day average"],
+            options: ["Just under $480.33, the low of the undercut", "$400, a round number", "At the 200-day average"],
             answer: 0,
-            explain: "On 15 Sept AMD traded up to $513.67 and triggered the entry. Within three weeks it reached $645.46, about 30% above the entry, against risk of about $18 a share.",
+            explain: "Within three weeks AMD reached $645.46. Ariel described it as being up 25 to 30% in a couple of weeks from a 1.25% risk.",
+          },
+          {
+            type: "mcq",
+            q: "The Nasdaq was choppy, under its 50-day, when Ariel bought AMD. Why take a long at all?",
+            options: [
+              "In choppy markets he prefers pullbacks into averages over breakouts, and this was one",
+              "He ignores the market for big stocks",
+              "Because AMD is famous",
+            ],
+            answer: 0,
+            explain: "The market decides which setups to favour, not only whether to trade.",
           },
         ],
       },
@@ -622,7 +874,7 @@ export const UNITS = [
             title: "A falling ceiling",
             body: [
               "A falling 50-day average often acts like a ceiling. When a weak stock rallies into it and gets pushed back, Ariel calls it an MA rejection. Short sellers use it to bet on a fall.",
-              "For a beginner who only buys, its main use is a warning sign.",
+              "He uses Rocket Lab rallying into its declining 50-day as an example in his 6/20 video. For a beginner who only buys, the main use is a warning sign: don't buy into a falling 50-day.",
             ],
             chart: { ex: "rklb_reject", from: "2026-05-15", to: "2026-08-17", marks: [{ date: "2026-08-17", label: "Rejected", at: "high", tone: "stop" }] },
           },
@@ -648,53 +900,95 @@ export const UNITS = [
   },
   {
     id: "entries",
-    title: "Setup vs entry",
-    blurb: "The daily chart picks the stock. The entry tactic picks the moment.",
+    title: "Step 5: Entry tactics",
+    blurb: "The daily chart picks the stock. A 5-minute tactic picks the moment.",
     lessons: [
       {
         id: "setup-vs-entry",
-        title: "Two separate decisions",
+        title: "Setup first, entry tactic second",
         video: "setupVsEntry",
         steps: [
           {
             type: "read",
             title: "What, then when",
             body: [
-              "Ariel separates two decisions. The daily setup tells you which stock and roughly where: a flat base, an undercut and rally. The entry tactic tells you the exact moment to buy, usually on a shorter chart during the day.",
+              "Ariel separates two decisions. The daily setup tells you which stock and roughly where: a flat base, an undercut and rally, a pullback into a rising average. The entry tactic tells you the exact moment to buy, on a 5-minute chart during the day.",
+              "If someone asks what he's trading, he can always answer both: the setup and the entry tactic.",
             ],
           },
           {
             type: "read",
-            title: "Common entry tactics",
+            title: "His entry tactics",
             body: [
-              "Prior-day high: buy when price trades above yesterday's high.",
-              "Opening range: buy when price breaks the high of the first 5 minutes.",
+              "Prior-day high: buy when price trades above yesterday's high. That's how he'd have bought KGC's flat base on 4 Aug 2025.",
+              "5-minute opening range break: buy when price breaks above the high of the first five minutes.",
               "VWAP reclaim: buy when price climbs back above VWAP, the day's average price weighted by volume.",
-              "The 6/20 setup, which Ariel credits to Gil Morales, is another intraday tactic. He only uses it when the daily chart already has a setup.",
+              "The 6/20 setup: the next lesson.",
             ],
-            video: "sixTwenty",
           },
           {
             type: "mcq",
-            q: "KBANK undercut its low and reclaimed it. You plan to buy if it trades above yesterday's high. Which part is the setup?",
+            q: "DELL undercut its meaningful low and reclaimed it. You plan to buy on a 5-minute opening range break. Which part is the setup?",
             options: [
-              "The undercut and reclaim is the setup; buying above yesterday's high is the entry tactic",
+              "The undercut and reclaim is the setup; the opening range break is the entry tactic",
               "Both are entry tactics",
               "Both are setups",
             ],
             answer: 0,
-            explain: "The daily pattern is the setup. The trigger that gets you in is the tactic.",
+            explain: "Structure comes from the daily chart. The trigger comes from the intraday chart.",
           },
           {
             type: "mcq",
-            q: "You see a clean 5-minute opening range breakout, but the daily chart is under a falling 50-day with no setup. What does Ariel's approach say?",
+            q: "Why bother with an intraday entry tactic at all?",
             options: [
-              "Skip it: the entry tactic only counts when the daily chart has a setup",
-              "Buy it: an intraday signal is enough",
-              "Buy it with extra size",
+              "It gets you in at a spot where the stop can be very tight",
+              "It guarantees the trade works",
+              "It lets you skip the daily chart",
             ],
             answer: 0,
-            explain: "Tactics time a good idea. They can't turn a bad daily chart into one.",
+            explain: "Ariel says great swing trades don't need the 5-minute chart, but it helps you get in with a small, defined risk.",
+          },
+        ],
+      },
+      {
+        id: "six-twenty",
+        title: "The 6/20 setup",
+        video: "sixTwenty",
+        steps: [
+          {
+            type: "read",
+            title: "Two moving averages on a 5-minute chart",
+            body: [
+              "The 6/20 setup comes from Gil Morales, who managed money with William O'Neil. On a 5-minute chart, a 6-period and a 20-period moving average cross. MACD usually crosses first, then the averages; Ariel waits for the averages, because MACD gives more false signals.",
+              "For a long, the stop goes at the low of the day.",
+            ],
+          },
+          {
+            type: "read",
+            title: "Only off a daily level",
+            body: [
+              "Ariel stresses that the 6/20 is not magic. It only counts when the daily chart gives a logical level: a pullback into a rising moving average, an undercut of a meaningful low, a support gap. Ideally other stocks in the group and the index are turning up too.",
+              "A 6/20 cross on the fourth green day in a row, straight into a falling 50-day, is the opposite of how it's meant to be used.",
+            ],
+          },
+          {
+            type: "mcq",
+            q: "A stock is up four days in a row into a falling 50-day average. A 6/20 buy signal appears on the 5-minute chart. What would Ariel say?",
+            options: [
+              "Skip it: no daily level supports a long here",
+              "Buy it: the signal is the signal",
+              "Buy double",
+            ],
+            answer: 0,
+            explain: "He'd rather see it get above the 50-day on its own, tighten up, then pull back to the 50 for a 6/20 off support.",
+          },
+          {
+            type: "calc",
+            q: "Ariel's example: a 6/20 entry with a stop 4% below at the low of day, taking a 10% position. What percent of the account is at risk?",
+            answer: 0.4,
+            tolerance: 0.001,
+            unit: "%",
+            explain: "10% position × 4% stop = 0.4% of the account, roughly the half percent he aims for.",
           },
         ],
       },
@@ -702,45 +996,45 @@ export const UNITS = [
   },
   {
     id: "risk",
-    title: "Risk and position size",
-    blurb: "Decide where you're wrong first. Then work out how many shares.",
+    title: "Step 6: Risk and size",
+    blurb: "Know the loss before you buy, then work out the shares.",
     lessons: [
       {
         id: "stops",
-        title: "Every trade has an exit before it starts",
+        title: "Decide the loss before you buy",
         video: "sizing",
         steps: [
           {
             type: "read",
-            title: "Risk per share is 1R",
+            title: "Stops without negotiation",
             body: [
-              "Before you buy, decide where you are wrong. Ariel usually puts the stop at the low of the entry day or the prior day's low.",
-              "The distance from entry to stop is your risk per share. Traders call it 1R and measure results in it: a trade that gains three times its risk made 3R.",
+              "Ariel's order is risk first, shares second. Before buying he knows where he's wrong, normally the low of the day he buys or the prior day's low.",
+              "The distance from entry to stop is the risk per share, called 1R. Results are measured in R: a trade that gains three times its risk made 3R.",
             ],
           },
           {
             type: "tap",
-            q: "You buy KBANK at ฿231 on 12 Oct 2026 as it reclaims ฿230. Tap where your stop goes.",
-            chart: { ex: "kbank_unr", from: "2026-09-15", to: "2026-10-12", lines: [{ price: 230, label: "Prior low", tone: "pivot" }] },
+            q: "You buy AOT at ฿42.00 on 25 Nov 2025 as it trades above the prior day's high. The low of that day is ฿41.75. Tap where your stop goes.",
+            chart: { ex: "aot_flat", from: "2025-10-10", to: "2025-11-25", lines: [{ price: 42.75, label: "Pivot", tone: "pivot" }] },
             mode: "price",
-            target: { lo: 223.5, hi: 226.5 },
-            explain: "Just under ฿226, the low of the undercut on 9 Oct. With KBANK moving in ฿1 steps, ฿225 is a common choice.",
+            target: { lo: 41.2, hi: 41.76 },
+            explain: "Just under ฿41.75, the low of the entry day. AOT moves in ฿0.25 steps, so ฿41.50 is the natural price.",
           },
           {
             type: "calc",
-            q: "Entry ฿231, stop ฿225. What is your risk per share?",
-            answer: 6,
+            q: "Entry ฿42.00, stop ฿41.50. What is your risk per share?",
+            answer: 0.5,
             tolerance: 0.001,
             unit: "฿",
-            explain: "฿231 − ฿225 = ฿6 per share. That is 1R for this trade.",
+            explain: "฿42.00 − ฿41.50 = ฿0.50 per share. That's 1R for this trade.",
           },
           {
             type: "calc",
-            q: "AMD trade: entry $498.39, stop $480.33. It later reached $645.46. How many R was that move? Round to one decimal.",
+            q: "AMD: say you bought at $498.39 with a stop at $480.33, and it later reached $645.46. How many R was that? Round to one decimal.",
             answer: 8.1,
             tolerance: 0.11,
             unit: "R",
-            explain: "Risk is $498.39 − $480.33 = $18.06. Gain is $645.46 − $498.39 = $147.07. $147.07 ÷ $18.06 = 8.1R.",
+            explain: "Risk $18.06, gain $147.07. $147.07 ÷ $18.06 = 8.1R. A few trades like this pay for many 1R losses.",
           },
         ],
       },
@@ -784,51 +1078,51 @@ export const UNITS = [
       },
       {
         id: "expectancy",
-        title: "Losing often, still profitable",
-        video: "predictive",
+        title: "Right 35% of the time, still profitable",
+        video: "sevenSteps",
         steps: [
           {
             type: "read",
             title: "Expectancy",
             body: [
-              "Ariel is open about how many of his trades lose. The profits come from the shape of the results: losers are cut at about 1R while winners are given room to run.",
+              "Ariel's stats say he's right on 35 to 37% of trades. He calls cutting losers quickly the single most important skill: you can be mediocre at everything else and still make money if you cut losers fast and let winners run.",
               "Expectancy = (win rate × average win) − (loss rate × average loss). It's the average result per trade, in R.",
             ],
           },
           {
             type: "calc",
-            q: "You win 40% of trades. Average win is 2.5R, average loss is 1R. What's the expectancy per trade, in R?",
+            q: "You win 35% of trades. The average win is 3R and the average loss is 1R. What's the expectancy per trade, in R?",
             answer: 0.4,
             tolerance: 0.001,
             unit: "R",
-            explain: "0.40 × 2.5 = 1.0. 0.60 × 1 = 0.6. 1.0 − 0.6 = +0.4R per trade. Losing 6 trades in 10 still makes money.",
+            explain: "0.35 × 3 = 1.05. 0.65 × 1 = 0.65. 1.05 − 0.65 = +0.4R per trade, while losing almost two trades in three.",
           },
           {
             type: "mcq",
-            q: "Another trader wins 70% of trades, but the average win is 0.5R and the average loss is 2R. What's the expectancy?",
-            options: ["−0.25R: a losing system despite winning often", "+0.35R", "+1.5R"],
+            q: "Same 35% win rate, but you let losers run to 2R on average. Expectancy?",
+            options: ["−0.25R: the same trades now lose money", "+0.4R, nothing changes", "+1.05R"],
             answer: 0,
-            explain: "0.70 × 0.5 = 0.35. 0.30 × 2 = 0.60. 0.35 − 0.60 = −0.25R. Winning often means little if the losses are big.",
+            explain: "1.05 − (0.65 × 2) = −0.25R. Only the loss size changed. That's why the stop isn't negotiable.",
           },
         ],
       },
     ],
   },
   {
-    id: "rules",
-    title: "Rules under pressure",
-    blurb: "Failed breakouts, selling into strength, and why setups don't predict.",
+    id: "manage",
+    title: "Step 7: Manage the trade",
+    blurb: "Sell rules, trims into strength, and letting winners work.",
     lessons: [
       {
         id: "failed",
-        title: "When a breakout fails",
+        title: "Follow the sell rule, both ways",
         video: "bigLosses",
         steps: [
           {
             type: "read",
             title: "KTB, September 2026",
             body: [
-              "Not every breakout works. KTB broke above ฿44.75 on 17 Sept 2026 and closed at ฿45.00. With a stop at the day's low of ฿44.25, the risk was ฿0.75 a share.",
+              "KTB broke above ฿44.75 on 17 Sept 2026 and closed at ฿45.00. The low that day was ฿44.25, so the stop went just under it at ฿44.00.",
             ],
             chart: {
               ex: "ktb_fail",
@@ -836,13 +1130,13 @@ export const UNITS = [
               to: "2026-09-21",
               lines: [
                 { price: 44.75, label: "Pivot", tone: "pivot" },
-                { price: 44.25, label: "Stop", tone: "stop" },
+                { price: 44.0, label: "Stop", tone: "stop" },
               ],
             },
           },
           {
             type: "mcq",
-            q: "28 Sept: KTB trades down to ฿43.50, through your ฿44.25 stop. What do you do?",
+            q: "28 Sept: KTB trades down to ฿43.50, through your ฿44.00 stop. What do you do?",
             chart: {
               ex: "ktb_fail",
               from: "2026-07-15",
@@ -850,70 +1144,108 @@ export const UNITS = [
               reveal: { upto: "2026-09-28" },
               lines: [
                 { price: 44.75, label: "Pivot", tone: "pivot" },
-                { price: 44.25, label: "Stop", tone: "stop" },
+                { price: 44.0, label: "Stop", tone: "stop" },
               ],
             },
             options: ["Sell: the stop is the plan", "Hold: it will come back", "Buy more to lower the average price"],
             answer: 0,
-            explain: "Two days later KTB fell to ฿40.75 on 244.5 million shares. Selling near the stop cost about ฿1 a share. Holding would have cost over ฿4.",
+            explain: "Two days later KTB fell to ฿40.75. Selling at the stop cost ฿1 a share, exactly 1R. Holding would have cost over 4R.",
+          },
+          {
+            type: "read",
+            title: "The other way to break a rule",
+            body: [
+              "In his video on avoiding huge losses, Ariel tells the opposite mistake. He bought SOXL and Amazon with stops at the low of the day. Both closed flat, his stops were never hit, but he sold anyway because the trades felt stuck.",
+              "Soon after, SOXL rose about 40% and Amazon gapped up about $15 a share, without him. He also held two earnings gap-ups, Toast and TMDX, that closed flat without hitting their stops, and both worked. His lesson: know your loss before you get in, and follow the rule all the time.",
+            ],
           },
           {
             type: "mcq",
-            q: "What usually turns a small loss into a huge one?",
-            options: ["Moving or ignoring the stop", "Using a stop", "Taking some profit early"],
+            q: "You bought a breakout with a stop at the day's low. Two days later it's flat and your stop hasn't been hit. Following Ariel's rule, you:",
+            options: ["Hold: the stop decides when you're wrong, not boredom", "Sell, because it feels stuck", "Move the stop lower to give it room"],
             answer: 0,
-            explain: "A stop only protects you if you follow it. Ariel's rule about avoiding huge losses comes down to this.",
+            explain: "Selling early and moving the stop are both ways of breaking the rule.",
           },
         ],
       },
       {
         id: "selling",
-        title: "Selling into strength",
-        video: "predictive",
+        title: "Trim into strength",
+        video: "sevenSteps",
         steps: [
           {
             type: "read",
-            title: "Pay yourself",
+            title: "The momentum burst",
             body: [
-              "Ariel trims part of a position into strength, often around the third to fifth day of a move. That locks in some gain and lets the rest ride with its stop.",
-              "Setups have no predictive power on their own. What they give you is a defined place to buy and a defined place to be wrong. Selling rules handle the rest.",
+              "Ariel counts the day he buys as day 1. Strong stocks often make a momentum burst: an 8 to 20% move over the next three to five days, sometimes up to eight.",
+              "He trims a third to a half into that burst. If a stock gives him 20 to 30% in three to five sessions, he takes half. If it keeps going you still own the rest; if it comes back, you're glad you sold.",
+            ],
+          },
+          {
+            type: "read",
+            title: "Let the rest work",
+            body: [
+              "While the stock holds above its 10 and 20-day averages, he lets the rest work. Extension tells him when to sell more: at about 7 ATR above the 50-day he trims, and again at each ATR after that, taking around 10% of what's left each time.",
+              "He doesn't add to a position once it's about 3 ATR above his entry without a fresh base. And he's described moving the stop on the rest to breakeven after taking some off.",
             ],
           },
           {
             type: "mcq",
-            q: "KGC broke out on 4 Aug 2025 at $17.26 with $0.91 of risk. Three days later it traded at $19.05, about 2R up. What does a trim-into-strength rule say?",
-            chart: { ...kgcBase, to: "2025-08-07", lines: [{ price: 16.52, label: "Pivot", tone: "pivot" }] },
+            q: "KGC broke out on 4 Aug 2025. On day 3, 6 Aug, it closed at $18.71, about 13% above a $16.48 entry. What does the trim rule say?",
+            chart: { ex: "kgc_flat", from: "2025-06-02", to: "2025-08-06", lines: [{ price: 16.48, label: "Entry", tone: "pivot" }] },
             options: [
-              "Sell part of the position and keep the rest with a stop",
+              "Trim a third to a half; keep the rest with a stop",
               "Sell everything and never buy KGC again",
-              "Put the rest of your cash into KGC",
+              "Buy more, it's working",
             ],
             answer: 0,
-            explain: "Trimming turns a paper gain into a real one, and the remaining shares can still catch the bigger move.",
+            explain: "A 13% burst by day 3 is exactly what he trims into. The rest can keep working while it stays above the 10 and 20-day.",
           },
           {
             type: "mcq",
-            q: "If setups don't predict the future, why use them?",
-            options: [
-              "They give a defined entry and a defined point where you're wrong",
-              "They do predict the future",
-              "They remove all risk",
-            ],
+            q: "A stock you own is now 8 ATR above its 50-day average. What does Ariel do?",
+            options: ["Trim some more, roughly 10% of what's left", "Add a big new position", "Nothing, extension doesn't matter"],
             answer: 0,
-            explain: "Defined risk plus letting winners run is what makes the expectancy positive.",
+            explain: "Stocks tend to revert to their averages when this extended. He harvests some of the gain.",
           },
         ],
       },
     ],
   },
   {
-    id: "review",
-    title: "Trade review",
-    blurb: "Mixed real charts. Name the setup, size it, decide.",
+    id: "trade",
+    title: "Trade it like Ariel",
+    blurb: "Replay real trades day by day with his rules.",
     lessons: [
+      {
+        id: "replay-kgc",
+        title: "Replay: KGC's flat base",
+        steps: [
+          {
+            type: "read",
+            title: "Now you trade it",
+            body: [
+              "You'll see the chart as it looked on the evening before the trade. Run the checklist, make the call, then manage the position one day at a time. Your result is compared with what Ariel's rules would have done.",
+              "The practice account is $100,000 for US stocks or ฿1,000,000 for Thai stocks, so share counts divide sensibly; what matters are the percentages. Each trade risks 0.5% of the account, or 0.25% when the rules say smaller, and no position is bigger than 15% of the account (7.5% when smaller).",
+            ],
+          },
+          { type: "trade", trade: "kgc" },
+        ],
+      },
+      {
+        id: "replay-ktb",
+        title: "Replay: a breakout that fails",
+        steps: [{ type: "trade", trade: "ktbfail" }],
+      },
+      {
+        id: "replay-dell",
+        title: "Replay: when the right call is to pass",
+        steps: [{ type: "trade", trade: "dell" }],
+      },
       {
         id: "review-game",
         title: "Mixed chart review",
+        video: "predictive",
         steps: [
           {
             type: "mcq",
@@ -936,11 +1268,11 @@ export const UNITS = [
           },
           {
             type: "mcq",
-            q: "Name this setup. KBANK, 12 Oct 2026.",
-            chart: { ex: "kbank_unr", from: "2026-09-01", to: "2026-11-20", reveal: { upto: "2026-10-12" } },
-            options: ["Undercut and rally", "Flat base breakout", "MA rejection"],
+            q: "AMD, 14 Sept 2026: a pullback into the 10 and 20-day, an intraday dip under the 20-day, and a close back above it. Name the setup.",
+            chart: { ex: "amd_munr", from: "2026-07-01", to: "2026-10-09", reveal: { upto: "2026-09-14" } },
+            options: ["MA undercut and rally", "Flat base breakout", "MA rejection"],
             answer: 0,
-            explain: "It broke the ฿230 low, then reclaimed it. KBANK reached ฿252 on 28 Oct, 9% above the ฿231 close.",
+            explain: "The trade Ariel took himself. AMD reached $645.46 within three weeks.",
           },
           {
             type: "mcq",

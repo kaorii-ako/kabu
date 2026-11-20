@@ -11,6 +11,7 @@ const blank = () => ({
   cards: {},
   openAll: false,
   theme: "auto",
+  trades: {},
 });
 
 let memory = null;

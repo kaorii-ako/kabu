@@ -99,6 +99,16 @@ export default function Chart({
   });
   const monthEvery = Math.ceil(months.length / Math.max(2, Math.floor(plotW / 64)));
 
+  const levels = (spec.lines || [])
+    .map((ln, k) => ({ ln, k }))
+    .filter(({ ln }) => !ln.after || revealed)
+    .sort((p, q) => q.ln.price - p.ln.price);
+  levels.forEach((lv, j) => {
+    const prev = levels[j - 1];
+    lv.chipY = prev ? Math.max(y(lv.ln.price), prev.chipY + 19) : y(lv.ln.price);
+    lv.below = Boolean(prev && y(lv.ln.price) - y(prev.ln.price) < 16);
+  });
+
   const active = hover ?? kbIndex;
   const info = visible[active ?? visible.length - 1];
 
@@ -257,22 +267,20 @@ export default function Chart({
           );
         })}
 
-        {(spec.lines || []).map((ln, k) =>
-          ln.after && !revealed ? null : (
-            <g key={k} className={`level ${tone(ln.tone)}`}>
-              <line x1={pad.l} x2={pad.l + plotW} y1={y(ln.price)} y2={y(ln.price)} />
-              <rect x={width - pad.r + 2} y={y(ln.price) - 9} width={pad.r - 4} height={18} rx="4" />
-              <text className="level-price" x={width - pad.r + 8} y={y(ln.price) + 4}>
-                {fmtPrice(ln.price)}
+        {levels.map(({ ln, k, chipY, below }) => (
+          <g key={k} className={`level ${tone(ln.tone)}`}>
+            <line x1={pad.l} x2={pad.l + plotW} y1={y(ln.price)} y2={y(ln.price)} />
+            <rect x={width - pad.r + 2} y={chipY - 9} width={pad.r - 4} height={18} rx="4" />
+            <text className="level-price" x={width - pad.r + 8} y={chipY + 4}>
+              {fmtPrice(ln.price)}
+            </text>
+            {ln.label && (
+              <text className="level-label" x={pad.l + 6} y={y(ln.price) + (below ? 15 : -6)}>
+                {ln.label}
               </text>
-              {ln.label && (
-                <text className="level-label" x={pad.l + 6} y={y(ln.price) - 6}>
-                  {ln.label}
-                </text>
-              )}
-            </g>
-          )
-        )}
+            )}
+          </g>
+        ))}
 
         {(spec.marks || []).map((mk, k) => {
           if (mk.after && !revealed) return null;

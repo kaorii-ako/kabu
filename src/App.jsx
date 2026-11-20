@@ -5,11 +5,13 @@ import Home from "./views/Home";
 import Review, { reviewItems } from "./views/Review";
 import Tools from "./views/Tools";
 import Sources from "./views/Sources";
-import { LESSONS } from "./content/course";
+import { LESSONS, QUESTION_TYPES } from "./content/course";
+import Trade from "./views/Trade";
 import { dueCards, finishLesson, gradeCard, setOption, streak, useStore } from "./lib/store";
 
 const PAGES = [
   ["learn", "Learn", "path"],
+  ["trade", "Trade", "play"],
   ["review", "Review", "cycle"],
   ["tools", "Tools", "tools"],
   ["about", "About", "book"],
@@ -64,7 +66,7 @@ export default function App() {
         onFinish={({ firstTry }) =>
           finishLesson(
             lesson.id,
-            items.filter((it) => it.step.type !== "read").map((it) => it.id),
+            items.filter((it) => QUESTION_TYPES.has(it.step.type)).map((it) => it.id),
             10 + firstTry * 2
           )
         }
@@ -151,6 +153,7 @@ export default function App() {
             }}
           />
         )}
+        {page === "trade" && <Trade state={state} />}
         {page === "tools" && <Tools />}
         {page === "about" && <Sources />}
       </main>

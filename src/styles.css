@@ -1736,3 +1736,335 @@ main#main {
 .tool .btn {
   justify-self: start;
 }
+
+.page-wide {
+  max-width: 980px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sim-trade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  width: 100%;
+}
+
+.sim-head h2 {
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+}
+
+.sim-head p {
+  margin-top: 8px;
+  color: var(--ink-2);
+  max-width: 66ch;
+}
+
+.sim-trade .chart {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 10px 8px 14px;
+}
+
+.sim-panel {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  animation: sheet-up 340ms var(--ease-out) both;
+}
+
+.sim-group {
+  max-width: 66ch;
+}
+
+.checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}
+
+.checks li {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  animation: sheet-up 300ms var(--ease-out) both;
+}
+
+.checks li.is-right {
+  border-color: var(--up);
+  background: var(--up-soft);
+}
+
+.checks li.is-wrong {
+  border-color: var(--down);
+  background: var(--down-soft);
+}
+
+.checks p {
+  max-width: 70ch;
+}
+
+.yn,
+.decide-row,
+.sim-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.yn .btn {
+  min-width: 96px;
+}
+
+.check-result {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-weight: 500;
+}
+
+.check-result .icon {
+  margin-top: 4px;
+}
+
+.is-right .check-result {
+  color: var(--up);
+}
+
+.is-wrong .check-result {
+  color: var(--down);
+}
+
+.decide {
+  display: grid;
+  gap: 10px;
+}
+
+.verdict.is-right {
+  border-color: var(--up);
+  background: var(--up-soft);
+}
+
+.verdict.is-wrong {
+  border-color: var(--down);
+  background: var(--down-soft);
+}
+
+.verdict p {
+  max-width: 70ch;
+}
+
+.verdict-line {
+  font-size: 18px;
+}
+
+.position {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 20px;
+  margin: 0;
+  width: 100%;
+}
+
+.position dt {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.position dd {
+  margin: 2px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.position dd small {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+.position .up,
+.compare .up {
+  color: var(--up);
+}
+
+.position .down,
+.compare .down {
+  color: var(--down);
+}
+
+.plan-note,
+.sim-help {
+  font-size: 14px;
+  color: var(--ink-2);
+  max-width: 72ch;
+}
+
+.hints {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+.hints li {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.compare h3 {
+  font-size: 18px;
+}
+
+.compare p {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+
+.rule-log,
+.trade-log {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.trade-log {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.trade-log span {
+  display: inline-block;
+  min-width: 52px;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+
+.trade-log .log-stop {
+  color: var(--down);
+}
+
+.trade-log .log-trim,
+.trade-log .log-sell {
+  color: var(--up);
+}
+
+.trade-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.trade-card {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 180ms var(--ease-out), border-color 180ms var(--ease-out);
+}
+
+.trade-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+.trade-card:active {
+  transform: scale(0.98);
+}
+
+.trade-market {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.trade-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.trade-setup {
+  color: var(--ink-2);
+  font-size: 15px;
+}
+
+.trade-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+@media (max-width: 720px) {
+  .position {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .compare {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-panel {
+    padding: 16px;
+  }
+
+  .sim-actions .btn {
+    flex: 1 1 140px;
+  }
+}

@@ -3,6 +3,8 @@ import Chart, { GroupChart } from "./Chart";
 import Icon from "./Icon";
 import { group, fmtDate, fmtPrice, example } from "../lib/market";
 import { VIDEOS, videoUrl } from "../content/course";
+import TradeSim from "./TradeSim";
+import { scenario } from "../content/trades";
 
 function grade(step, answer) {
   if (answer == null) return false;
@@ -71,6 +73,14 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
         {(step.video || (lesson?.video && lesson.steps.find((s) => s.type === "read") === step)) && (
           <VideoLink id={step.video || lesson.video} />
         )}
+      </div>
+    );
+  }
+
+  if (step.type === "trade") {
+    return (
+      <div className="step">
+        <TradeSim t={scenario(step.trade)} onComplete={() => setAnswer("done")} />
       </div>
     );
   }
@@ -191,8 +201,9 @@ export default function Player({ title, items, onExit, onFinish, onGrade, note }
   const idx = queue[pos];
   const item = items[idx];
   const step = item?.step;
-  const isQuestion = step && step.type !== "read";
-  const questions = useMemo(() => items.filter((it) => it.step.type !== "read").length, [items]);
+  const isQuestion = step && step.type !== "read" && step.type !== "trade";
+  const blocked = step?.type === "trade" && answer == null;
+  const questions = useMemo(() => items.filter((it) => it.step.type !== "read" && it.step.type !== "trade").length, [items]);
   const progress = done ? 1 : pos / queue.length;
   const verdict = useMemo(() => {
     const list = status === "right" ? PRAISE : NUDGE;
@@ -245,6 +256,7 @@ export default function Player({ title, items, onExit, onFinish, onGrade, note }
         return;
       }
       if (e.target.tagName === "svg" || e.target.closest?.("svg")) return;
+      if (blocked) return;
       if (!isQuestion || status !== "idle") {
         e.preventDefault();
         next();
@@ -313,8 +325,8 @@ export default function Player({ title, items, onExit, onFinish, onGrade, note }
                 Check
               </button>
             ) : (
-              <button type="button" className="btn btn-primary" onClick={next}>
-                Continue
+              <button type="button" className="btn btn-primary" onClick={next} disabled={blocked}>
+                {blocked ? "Finish the trade to continue" : "Continue"}
               </button>
             )}
           </div>

@@ -34,7 +34,7 @@ export default function Sources() {
       <h1>About Kabu</h1>
       <div className="prose">
         <p>
-          Kabu (株, Japanese for "stock") is a free, independent course for people who have never traded. It teaches one rules-based approach to swing trading, as explained by Ariel Hernandez on{" "}
+          Kabu (株, Japanese for "stock") is a free, independent course for people who have never traded. It teaches the swing trading process of Ariel Hernandez, step by step, as he explains it on{" "}
           <a href={CHANNEL} target="_blank" rel="noreferrer">
             his YouTube channel
           </a>
@@ -48,11 +48,11 @@ export default function Sources() {
       <h2>What it covers, and what it doesn't</h2>
       <div className="prose">
         <p>
-          Ariel's channel has more than 800 videos, most of them long live trading sessions. Kabu draws on his education and scanning videos and a few clips listed here. It does not summarise every live session, and his views may have changed since a video was recorded.
+          Ariel's channel has more than 800 videos, most of them long live trading sessions. Kabu is built from his teaching videos on setups, entry tactics, scanning and sizing, plus his long TraderLion interview on his full system, all listed below. It does not summarise every live session, and his views may have changed since a video was recorded.
         </p>
       </div>
 
-      <h2>Ariel's videos used in the lessons</h2>
+      <h2>Videos used in the lessons</h2>
       <ul className="link-list">
         {Object.values(VIDEOS).map((v) => (
           <li key={v.id}>

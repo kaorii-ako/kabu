@@ -7,8 +7,8 @@ const heroSpec = {
   ex: "kgc_flat",
   from: "2025-05-15",
   to: "2025-08-29",
-  lines: [{ price: 16.52, label: "Pivot $16.52", tone: "pivot" }],
-  marks: [{ date: "2025-08-04", label: "Breakout", at: "low", tone: "pivot" }],
+  lines: [{ price: 16.52, label: "Flat base pivot", tone: "pivot" }],
+  marks: [{ date: "2025-08-04", label: "Prior-day-high entry", at: "low", tone: "pivot" }],
 };
 
 function lessonState(lesson, i, state) {
@@ -37,13 +37,13 @@ export default function Home({ state, onStart, due }) {
     <>
       <section className="hero">
         <div className="hero-copy">
-          <h1>Learn to read a chart before you risk a baht.</h1>
+          <h1>Read charts and trade like Ariel Hernandez.</h1>
           <p className="lede">
-            Short, interactive lessons on swing trading for complete beginners. Every example is a real chart from US or Thai stocks, and the method comes from{" "}
+            His process, one step at a time: read the market, find the leading groups, spot the setup, enter with a tactic, size the risk, manage the trade. Built from{" "}
             <a href={CHANNEL} target="_blank" rel="noreferrer">
-              Ariel Hernandez's public videos
-            </a>
-            .
+              his public videos
+            </a>{" "}
+            and practised on real US and Thai charts. No trading experience needed.
           </p>
           <div className="hero-actions">
             {next ? (
@@ -53,6 +53,9 @@ export default function Home({ state, onStart, due }) {
             ) : (
               <p className="all-done">You have finished every lesson. Keep your reviews going.</p>
             )}
+            <a className="btn btn-quiet" href="#trade">
+              Replay a real trade
+            </a>
             {due > 0 && (
               <a className="btn btn-quiet" href="#review">
                 {due} review {due === 1 ? "card" : "cards"} due

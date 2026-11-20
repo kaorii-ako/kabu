@@ -1,4 +1,11 @@
 import market from "../data/market.json";
+import tradeData from "../data/trades.json";
+
+tradeData.forEach((t) => {
+  market.examples[`trade_${t.id}`] = { symbol: t.symbol, name: t.name, currency: t.currency, market: t.market, rows: t.rows };
+});
+
+export const TRADES = tradeData;
 
 export const MA_PERIODS = [10, 20, 50, 200];
 
@@ -20,6 +27,7 @@ export function bars(key, from, to) {
       c: r[4],
       v: r[5],
       ma: { 10: r[6], 20: r[7], 50: r[8], 200: r[9] },
+      atr: r[10] ?? null,
     }));
 }
 
