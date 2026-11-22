@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import { SERIES, emaArr } from "../lib/library";
+import { fmtDate } from "../lib/market";
 
 function num(v) {
   const n = Number(String(v).replace(/[,฿$\s]/g, ""));
@@ -265,13 +267,180 @@ function Simulator() {
   );
 }
 
+
+const BUCKET_NAME = { leading: "Leading", mediocre: "Mediocre", lagging: "Lagging" };
+
+function buildUniverse() {
+  const out = {};
+  Object.entries(SERIES.symbols).forEach(([sym, m]) => {
+    if (sym === SERIES.index.US || sym === SERIES.index.SET) return;
+    const rows = m.rows;
+    const c = rows.map((r) => r[4]);
+    out[sym] = { sym, name: m.name, market: m.market, currency: m.currency, rows, e50: emaArr(c, 50), e150: emaArr(c, 150) };
+  });
+  return out;
+}
+
+function classify(u, date) {
+  let i = u.rows.length - 1;
+  while (i >= 0 && u.rows[i][0] > date) i--;
+  if (i < 150 || u.e150[i] == null) return null;
+  const r = u.rows[i];
+  const close = r[4];
+  const e50 = u.e50[i];
+  const e150 = u.e150[i];
+  const from = Math.max(0, i - 19);
+  let dv = 0;
+  let adr = 0;
+  for (let k = from; k <= i; k++) {
+    dv += u.rows[k][4] * u.rows[k][5];
+    adr += u.rows[k][2] / u.rows[k][3] - 1;
+  }
+  const n = i - from + 1;
+  const bucket = close > e50 && e50 > e150 ? "leading" : close < e50 && e50 < e150 ? "lagging" : "mediocre";
+  return { ...u, date: r[0], close, e50, e150, dv: dv / n, adr: (adr / n) * 100, bucket };
+}
+
+function WatchlistSorter() {
+  const universe = useMemo(buildUniverse, []);
+  const dates = useMemo(() => {
+    const ref = SERIES.symbols[SERIES.index.US].rows.map((r) => r[0]);
+    return ref.slice(160);
+  }, []);
+  const [market, setMarket] = useState("US");
+  const [idx, setIdx] = useState(dates.length - 1);
+  const [liquidOnly, setLiquidOnly] = useState(true);
+  const date = dates[idx];
+  const rows = useMemo(
+    () =>
+      Object.values(universe)
+        .filter((u) => u.market === market)
+        .map((u) => classify(u, date))
+        .filter(Boolean)
+        .filter((r) => !liquidOnly || market !== "US" || r.dv >= 100e6)
+        .sort((a, b) => ["leading", "mediocre", "lagging"].indexOf(a.bucket) - ["leading", "mediocre", "lagging"].indexOf(b.bucket) || b.close / b.e50 - a.close / a.e50),
+    [universe, market, date, liquidOnly]
+  );
+  const counts = rows.reduce((acc, r) => ({ ...acc, [r.bucket]: (acc[r.bucket] || 0) + 1 }), {});
+  const cur = market === "US" ? "$" : "฿";
+  const money = (v) => (v >= 1e9 ? `${cur}${(v / 1e9).toFixed(1)}B` : `${cur}${Math.round(v / 1e6)}M`);
+  const px = (v) => v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  return (
+    <section className="tool" aria-labelledby="sorter-title">
+      <h2 id="sorter-title">Martin Luk's watchlist sorter</h2>
+      <p className="tool-intro">
+        His 2026 rules on the daily chart: leading if the price is above the 50 EMA and the 50 EMA is above the 150 EMA, lagging if both are reversed, mediocre otherwise. Move the date back to watch stocks change lists, and watch the counts: that's how he reads breadth.
+      </p>
+      <div className="segmented" role="radiogroup" aria-label="Market">
+        {[
+          ["US", "US"],
+          ["SET", "Thai (SET)"],
+        ].map(([k, label]) => (
+          <button key={k} type="button" role="radio" aria-checked={market === k} className={market === k ? "is-on" : ""} onClick={() => setMarket(k)}>
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="field">
+        <label htmlFor="sorter-date">Date: {fmtDate(date)}</label>
+        <input id="sorter-date" type="range" min={0} max={dates.length - 1} value={idx} onChange={(e) => setIdx(Number(e.target.value))} />
+      </div>
+      {market === "US" && (
+        <label className="check-row">
+          <input type="checkbox" checked={liquidOnly} onChange={(e) => setLiquidOnly(e.target.checked)} /> Only stocks trading at least $100M a day (his minimum)
+        </label>
+      )}
+      <div className="bucket-counts" aria-live="polite">
+        {["leading", "mediocre", "lagging"].map((b) => (
+          <span key={b} className={`bucket bucket-${b}`}>
+            {BUCKET_NAME[b]}: {counts[b] || 0}
+          </span>
+        ))}
+      </div>
+      <div className="table-scroll">
+        <table className="bucket-table">
+          <thead>
+            <tr>
+              <th scope="col">Stock</th>
+              <th scope="col">List</th>
+              <th scope="col">Close</th>
+              <th scope="col">50 EMA</th>
+              <th scope="col">150 EMA</th>
+              <th scope="col">Avg daily value</th>
+              <th scope="col">ADR</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.sym}>
+                <td>
+                  <strong>{r.sym}</strong>
+                </td>
+                <td>
+                  <span className={`bucket bucket-${r.bucket}`}>{BUCKET_NAME[r.bucket]}</span>
+                </td>
+                <td>{px(r.close)}</td>
+                <td>{px(r.e50)}</td>
+                <td>{px(r.e150)}</td>
+                <td>{money(r.dv)}</td>
+                <td>{r.adr.toFixed(1)}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="tool-intro">
+        Average daily value is the 20-day average of close × volume. ADR is the 20-day average of high ÷ low − 1. Kabu's universe is about 50 stocks; Martin sorts the hundreds his scans find.
+      </p>
+    </section>
+  );
+}
+
+function TightStopCalc() {
+  const [move, setMove] = useState("25");
+  const [stopA, setStopA] = useState("3");
+  const [stopB, setStopB] = useState("1.5");
+  const m = num(move);
+  const a = num(stopA);
+  const b = num(stopB);
+  const ok = [m, a, b].every((v) => Number.isFinite(v) && v > 0);
+  const ra = ok ? m / a : 0;
+  const rb = ok ? m / b : 0;
+  return (
+    <section className="tool" aria-labelledby="rstop-title">
+      <h2 id="rstop-title">Tight-stop calculator</h2>
+      <p className="tool-intro">Martin's favourite slide: the same move is worth far more R with a tighter stop. Change the numbers to see how many extra losing trades the tighter stop pays for.</p>
+      <div className="fields">
+        <Field label="The stock rises" value={move} onChange={setMove} suffix="%" />
+        <Field label="Wide stop" value={stopA} onChange={setStopA} suffix="%" />
+        <Field label="Tight stop" value={stopB} onChange={setStopB} suffix="%" />
+      </div>
+      {ok ? (
+        <div className="result" aria-live="polite">
+          <p className="result-main">
+            With the wide stop the move is worth <strong>{ra.toFixed(1)}R</strong>. With the tight stop it's worth <strong>{rb.toFixed(1)}R</strong>.
+          </p>
+          <p>
+            The tight stop adds <strong>{(rb - ra).toFixed(1)}R</strong>: enough to cover about {Math.floor(rb - ra)} extra stop-outs of 1R each.
+          </p>
+        </div>
+      ) : (
+        <p className="tool-error" role="alert">Fill in every box with a number above zero.</p>
+      )}
+    </section>
+  );
+}
+
 export default function Tools() {
   return (
     <div className="page">
       <h1>Tools</h1>
-      <p className="lede">Two small tools from the risk unit. Use them before every paper trade.</p>
+      <p className="lede">Small tools from both courses. Use them before every paper trade.</p>
       <SizeCalculator />
       <Simulator />
+      <WatchlistSorter />
+      <TightStopCalc />
     </div>
   );
 }

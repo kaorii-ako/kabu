@@ -1,6 +1,6 @@
 import Chart from "../components/Chart";
 import Icon from "../components/Icon";
-import { LESSONS, UNITS, CHANNEL } from "../content/course";
+import { TRACKS, trackLessons, CHANNEL, LUK_CHANNEL } from "../content/course";
 import { setOption } from "../lib/store";
 
 const cardSpec = {
@@ -11,9 +11,37 @@ const cardSpec = {
   marks: [{ date: "2025-08-04", label: "Entry", at: "low", tone: "pivot" }],
 };
 
+const lukCardSpec = {
+  ex: "luk_MU",
+  from: "2026-03-09",
+  to: "2026-05-08",
+  avwap: [{ from: "2026-03-18", label: "Anchored VWAP" }],
+  lines: [{ price: 457.82, label: "Inside day high", tone: "pivot" }],
+};
+
+const COPY = {
+  ariel: {
+    title: "Trade like Ariel Hernandez",
+    spec: cardSpec,
+    channel: CHANNEL,
+    lead: "Learn his swing trading process one step at a time: read the market, find the leaders, spot the setup, time the entry, size the risk, manage the trade. Built from",
+    tail: "and practised on real US and Thai charts.",
+    fine: "Not financial advice. Not affiliated with Ariel Hernandez.",
+  },
+  luk: {
+    title: "Trade like Martin Luk",
+    spec: lukCardSpec,
+    channel: LUK_CHANNEL,
+    lead: "The two-time US Investing Championship winner's method: how he scans and sorts stocks, buys pullbacks with very tight stops, sizes big with small risk, and sells into strength. Researched from",
+    linkText: "about 100 of his live streams",
+    tail: "and three long interviews, with every point linked to the moment he says it.",
+    fine: "Not financial advice. Not affiliated with Martin Luk.",
+  },
+};
+
 const OFFSETS = [0, 56, 84, 56, 0, -56, -84, -56];
 
-function lessonState(lesson, i, state) {
+function lessonState(lesson, i, state, LESSONS) {
   if (state.done[lesson.id]) return "done";
   const prev = LESSONS[i - 1];
   if (i === 0 || state.done[prev.id] || state.openAll) return "open";
@@ -21,6 +49,11 @@ function lessonState(lesson, i, state) {
 }
 
 export default function Home({ state, onStart, due }) {
+  const trackId = TRACKS.some((t) => t.id === state.track) ? state.track : "ariel";
+  const track = TRACKS.find((t) => t.id === trackId);
+  const UNITS = track.units;
+  const LESSONS = trackLessons(trackId);
+  const copy = COPY[trackId];
   const nextIndex = LESSONS.findIndex((l) => !state.done[l.id]);
   const next = LESSONS[nextIndex];
   const doneCount = LESSONS.filter((l) => state.done[l.id]).length;
@@ -30,17 +63,24 @@ export default function Home({ state, onStart, due }) {
   return (
     <div className="course-page">
       <aside className="course-card">
+        <div className="track-tabs" role="group" aria-label="Choose a trader to learn from">
+          {TRACKS.map((t) => (
+            <button key={t.id} type="button" aria-pressed={t.id === trackId} onClick={() => setOption("track", t.id)}>
+              {t.name}
+            </button>
+          ))}
+        </div>
         <div className="course-art">
-          <Chart spec={cardSpec} height={190} />
+          <Chart key={trackId} spec={copy.spec} height={190} />
         </div>
         <div className="course-body">
-          <h1>Trade like Ariel Hernandez</h1>
+          <h1>{copy.title}</h1>
           <p>
-            Learn his swing trading process one step at a time: read the market, find the leaders, spot the setup, time the entry, size the risk, manage the trade. Built from{" "}
-            <a href={CHANNEL} target="_blank" rel="noreferrer">
-              his public videos
+            {copy.lead}{" "}
+            <a href={copy.channel} target="_blank" rel="noreferrer">
+              {copy.linkText || "his public videos"}
             </a>{" "}
-            and practised on real US and Thai charts.
+            {copy.tail}
           </p>
           <div className="course-progress" aria-label={`${doneCount} of ${LESSONS.length} lessons done`}>
             <span style={{ transform: `scaleX(${pct / 100})` }} />
@@ -65,7 +105,7 @@ export default function Home({ state, onStart, due }) {
               </a>
             )}
           </div>
-          <p className="course-fine">Not financial advice. Not affiliated with Ariel Hernandez.</p>
+          <p className="course-fine">{copy.fine}</p>
         </div>
       </aside>
 
@@ -81,7 +121,7 @@ export default function Home({ state, onStart, due }) {
               {unit.lessons.map((lesson, k) => {
                 flat += 1;
                 const i = flat;
-                const status = lessonState(lesson, i, state);
+                const status = lessonState(lesson, i, state, LESSONS);
                 const current = next && next.id === lesson.id;
                 return (
                   <li key={lesson.id} style={{ "--x": `${OFFSETS[k % OFFSETS.length]}px` }}>

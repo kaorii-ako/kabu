@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Chart, { GroupChart } from "./Chart";
 import Icon from "./Icon";
 import { group, fmtDate, fmtPrice, example } from "../lib/market";
-import { VIDEOS, videoUrl } from "../content/course";
+import { VIDEOS, videoUrl, citeUrl } from "../content/course";
 import TradeSim from "./TradeSim";
 import Illustration from "./Illustration";
 import { scenario } from "../content/trades";
@@ -33,7 +33,7 @@ export function VideoLink({ id }) {
         <Icon name="play" size={14} />
       </span>
       <span>
-        Watch Ariel explain it
+        Watch {v.who || "Ariel"} explain it
         <small>{v.title}, on YouTube</small>
       </span>
     </a>
@@ -50,6 +50,43 @@ function Visuals({ step, revealed = true }) {
   );
 }
 
+function clock(t) {
+  const [h, m] = t.split(":").map(Number);
+  return h ? `${h}:${String(m).padStart(2, "0")}:00` : `${m}:00`;
+}
+
+function Cites({ cites }) {
+  if (!cites?.length) return null;
+  return (
+    <p className="cites">
+      <span>Where he says it:</span>
+      {cites.map(([id, t], i) => {
+        const v = VIDEOS[id];
+        if (!v) return null;
+        return (
+          <a key={i} href={citeUrl(v, t)} target="_blank" rel="noreferrer">
+            {v.short || v.title}
+            {t ? ` at ${clock(t)}` : ""}
+          </a>
+        );
+      })}
+    </p>
+  );
+}
+
+function optionOrder(step) {
+  const n = step.options.length;
+  let h = 2166136261;
+  for (const ch of step.q) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0;
+  const order = Array.from({ length: n }, (_, i) => i);
+  for (let i = n - 1; i > 0; i--) {
+    h = Math.imul(h ^ (h >>> 15), 2246822519) >>> 0;
+    const j = h % (i + 1);
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return step.keepOrder ? order.sort((a, b) => a - b) : order;
+}
+
 function Body({ paragraphs }) {
   return paragraphs.map((p, i) => <p key={i}>{p}</p>);
 }
@@ -62,15 +99,17 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
     if (step.type === "calc" && inputRef.current) inputRef.current.focus({ preventScroll: true });
   }, [step]);
 
+  const order = useMemo(() => (step.type === "mcq" ? optionOrder(step) : []), [step]);
+
   useEffect(() => {
     if (step.type !== "mcq" || checked) return;
     const onKey = (e) => {
       const n = Number(e.key);
-      if (n >= 1 && n <= step.options.length && !e.metaKey && !e.ctrlKey) setAnswer(n - 1);
+      if (n >= 1 && n <= step.options.length && !e.metaKey && !e.ctrlKey) setAnswer(order[n - 1]);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [step, checked, setAnswer]);
+  }, [step, checked, setAnswer, order]);
 
   if (step.type === "read") {
     return (
@@ -80,6 +119,7 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
           <Body paragraphs={step.body} />
         </div>
         <Visuals step={step} />
+        <Cites cites={step.cites} />
         {(step.video || (lesson?.video && lesson.steps.find((s) => s.type === "read") === step)) && (
           <VideoLink id={step.video || lesson.video} />
         )}
@@ -103,7 +143,8 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
         {prompt}
         <Visuals step={step} revealed={checked} />
         <div className="options" role="radiogroup" aria-label="Answers">
-          {step.options.map((opt, i) => {
+          {order.map((i, pos) => {
+            const opt = step.options[i];
             const state = checked ? (i === step.answer ? "is-right" : i === answer ? "is-wrong" : "is-muted") : answer === i ? "is-selected" : "";
             return (
               <button
@@ -120,7 +161,7 @@ function StepView({ step, lesson, answer, setAnswer, status, onSubmit }) {
                   onSubmit(i);
                 }}
               >
-                <kbd>{i + 1}</kbd>
+                <kbd>{pos + 1}</kbd>
                 <span>{opt}</span>
               </button>
             );
@@ -326,6 +367,7 @@ export default function Player({ title, items, onExit, onFinish, onGrade, note }
               <div>
                 <strong>{verdict}</strong>
                 <p>{step.explain}</p>
+                <Cites cites={step.cites} />
                 {status === "wrong" && retried.has(idx) && queue.indexOf(idx, pos + 1) > -1 && (
                   <p className="feedback-note">This one comes back at the end of the lesson.</p>
                 )}

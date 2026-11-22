@@ -1,10 +1,22 @@
 # Kabu
 
-Kabu (株, "stock") is a free, interactive course that teaches Ariel Hernandez's swing trading process to people who have never traded: how he reads the market, finds leading groups, reads a chart, picks a setup and entry tactic, sizes risk and manages a trade. Every example is a real daily chart from US or Thai stocks.
+Kabu (株, "stock") is a free, interactive course for people who have never traded. It has two tracks, each teaching one trader's process step by step on real daily charts from US or Thai stocks:
 
-The method comes from Ariel Hernandez's public YouTube videos ([@RealSimpleAriel](https://www.youtube.com/@RealSimpleAriel)). Kabu is an independent summary and is not affiliated with or endorsed by him. Nothing here is financial advice.
+- **Ariel Hernandez**: how he reads the market, finds leading groups, reads a chart, picks a setup and entry tactic, sizes risk and manages a trade. From his public YouTube videos ([@RealSimpleAriel](https://www.youtube.com/@RealSimpleAriel)).
+- **Martin Luk**: how the two-time US Investing Championship winner scans and sorts stocks, buys pullbacks with very tight stops, sizes large positions with small risk, shorts, and sells into strength. From his live streams ([@martinlukkt](https://www.youtube.com/@martinlukkt)) and interviews.
+
+Kabu is an independent summary and is not affiliated with or endorsed by either trader. Nothing here is financial advice.
 
 ## What's inside
+
+### Martin Luk track
+
+- 20 lessons in 8 levels: who he is and why tight stops win; his three scans and leading/mediocre/lagging watchlists; EMAs (9, 21, 50, 150) and the weekly chart; anchored VWAP; pullback buys, breakouts, pullback shorts and parabolics; intraday triggers and stop placement; sizing from the stop and exposure; selling and earnings; reading the market, his December 2025 drawdown, and how his method changed from 2024 to 2026.
+- Every point links to the video and minute where he says it. The research notes behind the track are in [`docs/martin-luk-research.md`](docs/martin-luk-research.md): captions from all 115 videos on his channel (100 had captions) plus his TraderLion and USIC interviews.
+- Chart questions use EMAs and anchored VWAP on real moves: AMD (Oct 2025), IonQ (Sep 2025), Micron (Apr 2026 pullback, Oct 2026 short), Tesla (Sep 2025), Robinhood (Jun 2026) and QQQ (Apr 2025).
+- Tools: a watchlist sorter that applies his 2026 rules to Kabu's stocks on any date, and a tight-stop R calculator.
+
+### Ariel Hernandez track
 
 - 31 lessons in 10 units that follow his order: his playbook, chart basics (candles, volume, moving averages, ATR), reading the market, finding leaders, reading the chart, his setups (flat base, undercut and rally, MA undercut and rally, MA rejection), entry tactics (prior-day high, opening range, VWAP, 6/20), risk and position size, and managing the trade (sell rules, trimming into strength).
 - Trade replays: real setups from KGC, DELTA, AOT, KTB, KBANK, AMD, DELL and RKLB. You run Ariel's checklist, decide to take, size down or pass, then manage the trade one day at a time. Your result is compared with a rule engine that follows his guidance (stop at the entry day's low, trim a third to a half on a 3 to 5 day momentum burst, breakeven stop after the trim, extension trims from 7 ATR above the 50-day, and a simple close-below-the-20-day trailing exit).

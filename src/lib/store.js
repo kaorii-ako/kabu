@@ -12,6 +12,7 @@ const blank = () => ({
   openAll: false,
   theme: "auto",
   trades: {},
+  track: "ariel",
 });
 
 let memory = null;

@@ -65,7 +65,10 @@ export default function App() {
         title={lesson.title}
         items={items}
         note="The questions you just answered will come back in Review over the next few days. Spacing them out is what makes them stick."
-        onExit={() => go("learn")}
+        onExit={() => {
+          if (lesson.track && lesson.track !== state.track) setOption("track", lesson.track);
+          go("learn");
+        }}
         onFinish={({ firstTry }) =>
           finishLesson(
             lesson.id,
@@ -177,7 +180,7 @@ export default function App() {
 
       <footer className="footer">
         <p>
-          Kabu is an independent learning project, not affiliated with Ariel Hernandez. Nothing here is financial advice. Prices from Yahoo Finance.
+          Kabu is an independent learning project, not affiliated with Ariel Hernandez or Martin Luk. Nothing here is financial advice. Prices from Yahoo Finance.
         </p>
       </footer>
     </div>

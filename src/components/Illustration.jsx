@@ -45,6 +45,108 @@ function Candles({ ys, x0 = 20, dx = 16, w = 10, spread = 6 }) {
 }
 
 const ART = {
+  "luk-stop-curve": () => {
+    const X = (stop) => 40 + ((3.2 - stop) / 2.4) * 290;
+    const Y = (r) => 172 - r * 2.6;
+    const curve = (move) => {
+      const pts = [];
+      for (let st = 3.2; st >= 0.8; st -= 0.1) pts.push([X(st).toFixed(1), Y(move / st).toFixed(1)]);
+      return pts;
+    };
+    return (
+      <>
+        <line x1={40} x2={330} y1={172} y2={172} className="il-guide" />
+        <line x1={40} x2={40} y1={20} y2={172} className="il-guide" />
+        <Path pts={curve(25)} className="il-line il-a-stroke" />
+        <Path pts={curve(50)} className="il-line il-c-stroke" />
+        <T x={332} y={Y(25 / 0.8) + 4} size={12} anchor="end" className="il-a-text">+25% move</T>
+        <T x={300} y={36} size={12} anchor="end" className="il-c-text">+50% move</T>
+        <circle cx={X(3)} cy={Y(25 / 3)} r={4} className="il-a-fill" />
+        <circle cx={X(1.5)} cy={Y(25 / 1.5)} r={4} className="il-a-fill" />
+        <T x={X(3) + 6} y={Y(25 / 3) - 6} size={11} className="il-muted">8.3R</T>
+        <T x={X(1.5) + 6} y={Y(25 / 1.5) + 14} size={11} className="il-muted">16.7R</T>
+        <T x={40} y={190} size={11} className="il-muted">3% stop</T>
+        <T x={330} y={190} size={11} className="il-muted" anchor="end">tighter stop →</T>
+        <T x={46} y={30} size={11} className="il-muted">R earned</T>
+      </>
+    );
+  },
+  "luk-buckets": () => (
+    <>
+      {[
+        [14, "Leading", "price > 50 EMA", "50 EMA > 150 EMA", "il-up-fill"],
+        [127, "Mediocre", "anything", "in between", "il-card"],
+        [240, "Lagging", "price < 50 EMA", "50 EMA < 150 EMA", "il-down-fill"],
+      ].map(([x, t, a, b, c]) => (
+        <g key={t}>
+          <rect x={x} y={40} width={106} height={110} rx="12" className={c} />
+          <T x={x + 53} y={70} anchor="middle" size={15} className={c === "il-card" ? "il-text" : "il-onfill"}>{t}</T>
+          <T x={x + 53} y={102} anchor="middle" size={11} className={c === "il-card" ? "il-muted" : "il-onfill"}>{a}</T>
+          <T x={x + 53} y={120} anchor="middle" size={11} className={c === "il-card" ? "il-muted" : "il-onfill"}>{b}</T>
+        </g>
+      ))}
+      <T x={180} y={26} anchor="middle" size={12} className="il-muted">every stock from the scans goes in one box</T>
+      <T x={180} y={180} anchor="middle" size={12}>look long above the 50, short below it</T>
+    </>
+  ),
+  "luk-avwap": () => {
+    const ys = [70, 84, 98, 112, 124, 132, 126, 116, 104, 92, 84, 90, 100, 106, 98, 86, 72, 58, 46];
+    return (
+      <>
+        <Path pts={ys.map((_, i) => [20 + i * 17, 60 + i * 2.6])} className="il-line il-vwap" />
+        <Candles ys={ys} x0={20} dx={17} w={9} spread={6} />
+        <T x={22} y={52} size={12} className="il-muted">anchor: the swing high</T>
+        <circle cx={20 + 10 * 17} cy={90} r={14} className="il-ring" />
+        <T x={20 + 10 * 17} y={74} size={11} anchor="middle" className="il-up-text">breaks above</T>
+        <circle cx={20 + 13 * 17} cy={110} r={14} className="il-ring" />
+        <T x={20 + 13 * 17} y={140} size={11} anchor="middle" className="il-a-text">retest holds: buy</T>
+        <T x={180} y={190} size={12} anchor="middle" className="il-muted">break and retest of the anchored VWAP</T>
+      </>
+    );
+  },
+  "luk-short": () => {
+    const ys = [60, 58, 56, 55, 52, 50, 66, 84, 100, 112, 104, 96, 90, 104, 122, 140, 156];
+    return (
+      <>
+        <Path pts={ys.map((_, i) => [20 + i * 19, 70 + Math.max(0, i - 4) * 3.2 - Math.min(i, 4) * 1.5])} className="il-line il-c-stroke" />
+        <T x={22} y={46} size={12} className="il-c-text">50 EMA</T>
+        <Candles ys={ys} x0={20} dx={19} w={10} spread={6} />
+        <circle cx={20 + 6 * 19} cy={70} r={14} className="il-ring" />
+        <T x={20 + 6 * 19} y={150} size={11} anchor="middle" className="il-down-text">first close below</T>
+        <circle cx={20 + 12 * 19} cy={88} r={14} className="il-ring" />
+        <T x={20 + 12 * 19} y={62} size={11} anchor="middle" className="il-down-text">first bounce into it: short</T>
+        <T x={180} y={192} size={12} anchor="middle" className="il-muted">stop above the high of the bounce day</T>
+      </>
+    );
+  },
+  "luk-intraday": () => {
+    const ys = [70, 82, 96, 112, 126, 134, 128, 118, 104, 92, 80, 70];
+    return (
+      <>
+        <rect x={20} y={124} width={320} height={22} rx="6" className="il-zone" />
+        <T x={24} y={178} size={11} className="il-muted">support zone</T>
+        <Candles ys={ys} x0={30} dx={26} w={12} spread={6} />
+        <line x1={30 + 6 * 26 - 14} x2={30 + 8 * 26} y1={121} y2={121} className="il-pivot" />
+        <T x={345} y={112} size={11} anchor="end" className="il-a-text">buy: break of the previous bar's high</T>
+        <line x1={30 + 5 * 26 - 14} x2={30 + 8 * 26} y1={143} y2={143} className="il-stopline" />
+        <T x={345} y={178} size={11} anchor="end" className="il-down-text">stop: low of day</T>
+        <T x={24} y={28} size={12} className="il-muted">fast flush into support on a 1, 5 or 15 min chart</T>
+      </>
+    );
+  },
+  "luk-sizing": () => (
+    <>
+      <rect x={20} y={40} width={320} height={28} rx="8" className="il-card" />
+      <rect x={20} y={40} width={72} height={28} rx="8" className="il-a-fill" />
+      <T x={20} y={32} size={12}>Account</T>
+      <T x={100} y={59} size={12} className="il-muted">position, usually 20–30% of the account</T>
+      <rect x={20} y={110} width={320} height={28} rx="8" className="il-card" />
+      <rect x={20} y={110} width={5} height={28} rx="2" className="il-down-fill" />
+      <T x={20} y={102} size={12}>Risk if the stop is hit</T>
+      <T x={32} y={129} size={12} className="il-muted">0.3–0.5% of the account</T>
+      <T x={20} y={178} size={13}>position = account × risk % ÷ stop %</T>
+    </>
+  ),
   "candle-anatomy": () => (
     <>
       <Candle x={110} o={140} c={70} h={34} l={170} w={46} />

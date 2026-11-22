@@ -32,6 +32,7 @@ export function example(key) {
 
 export function bars(key, from, to) {
   const ex = example(key);
+  const keys = ex.maKeys || MA_PERIODS;
   return ex.rows
     .filter((r) => (!from || r[0] >= from) && (!to || r[0] <= to))
     .map((r) => ({
@@ -41,7 +42,7 @@ export function bars(key, from, to) {
       l: r[3],
       c: r[4],
       v: r[5],
-      ma: { 10: r[6], 20: r[7], 50: r[8], 200: r[9] },
+      ma: { [keys[0]]: r[6], [keys[1]]: r[7], [keys[2]]: r[8], [keys[3]]: r[9] },
       atr: r[10] ?? null,
     }));
 }

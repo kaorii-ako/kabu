@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { bars, example, fmtDate, fmtPrice, fmtVol, monthLabel } from "../lib/market";
+import { anchoredVwap } from "../lib/library";
 
 function useWidth(ref) {
   const [w, setW] = useState(640);
@@ -23,6 +24,7 @@ function niceTicks(lo, hi, count = 5) {
 }
 
 const MA_LABEL = { 10: "10-day", 20: "20-day", 50: "50-day", 200: "200-day" };
+const maLabel = (m, ema) => (ema ? `${m} EMA` : `${MA_LABEL[m]} average`);
 
 export default function Chart({
   spec,
@@ -39,7 +41,15 @@ export default function Chart({
   const all = useMemo(() => bars(spec.ex, spec.from, spec.to), [spec.ex, spec.from, spec.to]);
   const cut = spec.reveal && !revealed ? all.findIndex((b) => b.date > spec.reveal.upto) : -1;
   const visible = cut === -1 ? all : all.slice(0, cut);
-  const mas = spec.mas ?? [10, 20, 50];
+  const mas = spec.mas ?? (ex.maKeys ? [9, 21, 50] : [10, 20, 50]);
+  const vwaps = useMemo(
+    () =>
+      (spec.avwap || []).map((a) => {
+        const v = anchoredVwap(ex.rows, a.from);
+        return { ...a, at: (date) => v[date] ?? null };
+      }),
+    [ex, spec.avwap]
+  );
   const [hover, setHover] = useState(null);
   const [cursorPrice, setCursorPrice] = useState(null);
   const [kbIndex, setKbIndex] = useState(null);
@@ -72,6 +82,13 @@ export default function Chart({
           b = Math.max(b, v);
         }
       });
+      vwaps.forEach((w) => {
+        const v = w.at(d.date);
+        if (v != null) {
+          a = Math.min(a, v);
+          b = Math.max(b, v);
+        }
+      });
     });
     (spec.lines || []).forEach((ln) => {
       if (!ln.after || revealed) {
@@ -81,7 +98,7 @@ export default function Chart({
     });
     const p = (b - a) * 0.07;
     return [a - p, b + p];
-  }, [visible, mas, spec.lines, revealed]);
+  }, [visible, mas, vwaps, spec.lines, revealed]);
 
   const vMax = Math.max(...visible.map((d) => d.v), 1);
   const x = (i) => pad.l + slot * i + slot / 2;
@@ -252,6 +269,16 @@ export default function Chart({
           return pts.length > 1 ? <polyline key={m} className={`ma ma-${m}`} points={pts.join(" ")} /> : null;
         })}
 
+        {vwaps.map((w, k) => {
+          const pts = visible
+            .map((d, i) => {
+              const v = w.at(d.date);
+              return v != null ? `${x(i).toFixed(1)},${y(v).toFixed(1)}` : null;
+            })
+            .filter(Boolean);
+          return pts.length > 1 ? <polyline key={`aw${k}`} className="avwap" points={pts.join(" ")} /> : null;
+        })}
+
         {visible.map((d, i) => {
           const up = d.c >= d.o;
           const top = y(Math.max(d.o, d.c));
@@ -336,12 +363,18 @@ export default function Chart({
           </g>
         )}
       </svg>
-      {mas.length > 0 && (
+      {(mas.length > 0 || vwaps.length > 0) && (
         <figcaption className="chart-legend">
           {mas.map((m) => (
             <span key={m} className={`legend legend-${m}`}>
               <i />
-              {MA_LABEL[m]} average
+              {maLabel(m, ex.ema)}
+            </span>
+          ))}
+          {vwaps.map((w, k) => (
+            <span key={`aw${k}`} className="legend legend-avwap">
+              <i />
+              {w.label || `Anchored VWAP from ${fmtDate(w.from)}`}
             </span>
           ))}
         </figcaption>

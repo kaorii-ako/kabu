@@ -1,4 +1,7 @@
+import { LUK_UNITS, LUK_VIDEOS, LUK_CHANNEL } from "./luk";
+
 export const CHANNEL = "https://www.youtube.com/@RealSimpleAriel";
+export { LUK_CHANNEL };
 
 export const VIDEOS = {
   setupVsEntry: { id: "310HGdY-uoE", title: "Daily Setup vs Entry Tactic" },
@@ -17,7 +20,19 @@ export const VIDEOS = {
   sevenSteps: { id: "-dv_2h61a2o", title: "The 7 Steps to a Profitable Trading System (TraderLion interview)" },
 };
 
+Object.values(VIDEOS).forEach((v) => {
+  v.who = v.who || "Ariel";
+});
+export const ARIEL_VIDEOS = { ...VIDEOS };
+Object.assign(VIDEOS, LUK_VIDEOS);
+
 export const videoUrl = (v) => `https://www.youtube.com/watch?v=${v.id}`;
+
+export function citeUrl(v, t) {
+  if (!t) return videoUrl(v);
+  const [h, m] = t.split(":").map(Number);
+  return `${videoUrl(v)}&t=${h * 3600 + m * 60}s`;
+}
 
 const kgcBase = { ex: "kgc_flat", from: "2025-06-02", to: "2025-08-29" };
 
@@ -537,6 +552,7 @@ export const UNITS = [
             type: "mcq",
             q: "From late August to 24 Nov 2025 AOT rose 10% while the SET50 fund rose 1% (chart). From mid-May to 17 Aug 2026 RKLB fell 34% while QQQ rose 3%. Which shows relative strength?",
             options: ["AOT", "RKLB", "Neither"],
+            keepOrder: true,
             answer: 0,
             explain: "AOT beat its market. RKLB badly lagged a rising market, which is relative weakness.",
           },
@@ -1386,7 +1402,14 @@ UNITS.forEach((u) =>
   )
 );
 
-export const LESSONS = UNITS.flatMap((u) => u.lessons.map((l) => ({ ...l, unit: u })));
+export const TRACKS = [
+  { id: "ariel", name: "Ariel Hernandez", units: UNITS },
+  { id: "luk", name: "Martin Luk", units: LUK_UNITS },
+];
+
+export const LESSONS = TRACKS.flatMap((t) => t.units.flatMap((u) => u.lessons.map((l) => ({ ...l, unit: u, track: t.id }))));
+
+export const trackLessons = (id) => LESSONS.filter((l) => l.track === id);
 
 export function findStep(cardId) {
   const [lessonId, idx] = cardId.split(":");
